@@ -168,6 +168,45 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .nav-burger.open span:nth-child(2) { opacity: 0; }
 .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* ── Café sound toggle button ──────────────────────────────────── */
+.nav-cafe-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  position: relative;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+.nav-cafe-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.nav-cafe-btn.cafe-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0f;
+}
+/* ripple pulse when playing */
+.nav-cafe-btn.cafe-on::after {
+  content: '';
+  position: absolute;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  animation: cafe-pulse 1.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes cafe-pulse {
+  0%   { transform: scale(1); opacity: .7; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
 /* ── Buttons ───────────────────────────────────────────────────── */
 .btn-primary {
   display: inline-block;

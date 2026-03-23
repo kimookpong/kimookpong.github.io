@@ -684,4 +684,14 @@
 
   init();
 
+  /* ── Café ambience toggle button ─────────────────────────────── */
+  const cafeBtn = document.getElementById('cafeSoundBtn');
+  if (cafeBtn) {
+    cafeBtn.addEventListener('click', () => {
+      const on = window.cafeAmbience && window.cafeAmbience.toggle();
+      cafeBtn.classList.toggle('cafe-on', on);
+      cafeBtn.querySelector('.cafe-icon-off').style.display = on ? 'none'  : '';
+      cafeBtn.querySelector('.cafe-icon-on').style.display  = on ? ''      : 'none';
+    });
+  }
 })();
