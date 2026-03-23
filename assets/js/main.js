@@ -279,9 +279,11 @@
     const current = titles[tIdx];
     if (!deleting) {
       typingEl.textContent = current.slice(0, ++cIdx);
+      if (typeof window.kbClick === 'function') window.kbClick(false);
       if (cIdx === current.length) { deleting = true; setTimeout(typeStep, 1800); return; }
     } else {
       typingEl.textContent = current.slice(0, --cIdx);
+      if (typeof window.kbClick === 'function') window.kbClick(true);
       if (cIdx === 0) { deleting = false; tIdx = (tIdx + 1) % titles.length; setTimeout(typeStep, 400); return; }
     }
     setTimeout(typeStep, deleting ? 45 : 80);
