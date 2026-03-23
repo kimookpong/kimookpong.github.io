@@ -32,9 +32,11 @@
       {
         category: 'Frontend', icon: '🎨',
         items: [
-          { name: 'Next.js / React', level: 'advanced'     },
+          { name: 'Next.js',         level: 'advanced'     },
           { name: 'TypeScript',      level: 'advanced'     },
           { name: 'Tailwind CSS',    level: 'advanced'     },
+          { name: 'Bootstrap',       level: 'advanced'     },
+          { name: 'React Native',    level: 'advanced'     },
           { name: 'Line OA / LIFF',  level: 'intermediate' },
         ],
       },
@@ -42,9 +44,12 @@
         category: 'Backend', icon: '⚙️',
         items: [
           { name: 'Node.js / Express', level: 'advanced'     },
-          { name: 'Python',            level: 'intermediate' },
-          { name: 'REST API',          level: 'advanced'     },
+          { name: 'Yii2',              level: 'advanced'     },
+          { name: 'CodeIgniter',       level: 'advanced'     },
           { name: 'PHP / Laravel',     level: 'intermediate' },
+          { name: 'Python',            level: 'intermediate' },
+          { name: 'Go',                level: 'basic'        },
+          { name: 'REST API',          level: 'advanced'     },
         ],
       },
       {
@@ -52,17 +57,20 @@
         items: [
           { name: 'PostgreSQL', level: 'advanced'     },
           { name: 'MongoDB',    level: 'advanced'     },
-          { name: 'MySQL',      level: 'intermediate' },
+          { name: 'MySQL',      level: 'advanced'     },
+          { name: 'Oracle',     level: 'intermediate' },
           { name: 'Redis',      level: 'basic'        },
         ],
       },
       {
-        category: 'Tools & DevOps', icon: '🚀',
+        category: 'Infrastructure', icon: '🚀',
         items: [
           { name: 'Git / GitHub',     level: 'advanced'     },
           { name: 'Docker',           level: 'intermediate' },
+          { name: 'Ubuntu Server',    level: 'intermediate' },
+          { name: 'Nginx',            level: 'basic'        },
+          { name: 'Apache',           level: 'basic'        },
           { name: 'Vercel / Railway', level: 'advanced'     },
-          { name: 'Linux / Bash',     level: 'intermediate' },
         ],
       },
     ],
@@ -73,109 +81,115 @@
         desc: 'A platform for managing pharmacy clerkship programs at Walailak University. Handles scheduling, student progress tracking, and supervisor evaluations.',
         tags: ['React', 'PostgreSQL'],
         category: 'web',
-        emoji: '�',
+        emoji: '💊',
         demo: 'https://www.pharmwuclerkship.com/',
         repo: 'https://github.com/kimookpong',
       },
       {
         id: 2,
-        title: 'Farm-D Project',
-        desc: 'A system for developing digital tools for agricultural personnel. Enables farmers to log crop data, receive line notifications, and manage farm operations online.',
-        tags: ['Next.js', 'MongoDB', 'Line OA'],
-        category: 'web',
-        emoji: '🌾',
-        demo: 'https://farmd.vercel.app/',
-        repo: 'https://github.com/kimookpong',
-      },
-      {
-        id: 3,
         title: 'TCNAP – Thailand Community Network Assessment',
         desc: 'Thailand Community Network Assessment Project — a data collection and reporting platform for community health network assessments across Thailand.',
         tags: ['Next.js', 'PostgreSQL'],
         category: 'web',
         emoji: '🏥',
-        demo: '#',
+        demo: 'https://tcnap.org/',
         repo: 'https://github.com/kimookpong',
       },
       {
-        id: 4,
-        title: 'Wanderwoods POS',
-        desc: 'Point of Sale (POS) system designed for a large restaurant. Features table management, real-time order tracking, kitchen display, and end-of-day sales reports.',
-        tags: ['React', 'Node.js', 'PostgreSQL'],
-        category: 'web',
-        emoji: '🍽️',
-        demo: '#',
-        repo: 'https://github.com/kimookpong',
-      },
-      {
-        id: 5,
-        title: 'Stock Management (QR)',
-        desc: 'A stock management system utilising QR code scanning for real-time verification and monitoring of inventory across multiple locations.',
-        tags: ['Next.js', 'PostgreSQL', 'QR Code'],
-        category: 'web',
-        emoji: '📦',
-        demo: '#',
-        repo: 'https://github.com/kimookpong/stocklazer',
-      },
-      {
-        id: 6,
-        title: 'Udon City Tourism',
-        desc: 'A tourism platform showcasing attractions, accommodations, and local services in Udon City. Includes a map interface and attraction ratings.',
-        tags: ['Next.js', 'MongoDB'],
-        category: 'web',
-        emoji: '🗺️',
-        demo: '#',
-        repo: 'https://github.com/kimookpong',
-      },
-      {
-        id: 7,
+        id: 3,
         title: 'Pharmacy WU Alumni',
         desc: 'A platform for managing pharmacy alumni relations at Walailak University. Tracks graduate careers, events, and alumni networking.',
         tags: ['Next.js', 'PostgreSQL'],
         category: 'web',
         emoji: '🎓',
-        demo: '#',
+        demo: 'https://www.pharmwualumni.com/',
         repo: 'https://github.com/thasala-dev/alumni',
       },
       {
+        id: 4,
+        title: 'HRMS – Walailak University',
+        desc: 'Human Resource Management System for Walailak University. Handles employee records, leave requests, payroll data, and org-chart management.',
+        tags: ['Next.js', 'PostgreSQL'],
+        category: 'web',
+        emoji: '👥',
+        demo: 'https://hrms.wu.ac.th/',
+        repo: 'https://github.com/thasala-dev/wu-coop',
+      },
+      {
+        id: 5,
+        title: 'StockLazer',
+        desc: 'Real-time stock management system that utilises QR code scanning for efficient inventory tracking. Supports multi-warehouse and live dashboard.',
+        tags: ['TypeScript', 'Next.js', 'QR Code'],
+        category: 'web',
+        emoji: '🔦',
+        demo: 'https://stocklazer.vercel.app/',
+        repo: 'https://github.com/kimookpong/stocklazer',
+      },
+      {
+        id: 6,
+        title: 'Farm-D Project',
+        desc: 'A system for developing digital tools for agricultural personnel. Enables farmers to log crop data, receive line notifications, and manage farm operations online.',
+        tags: ['Next.js', 'MongoDB', 'Line OA'],
+        category: 'web',
+        emoji: '🌾',
+        private: true,
+        demo: null,
+        repo: null,
+      },
+      {
+        id: 7,
+        title: 'Wanderwoods POS',
+        desc: 'Point of Sale (POS) system designed for a large restaurant. Features table management, real-time order tracking, kitchen display, and end-of-day sales reports.',
+        tags: ['React', 'Node.js', 'PostgreSQL'],
+        category: 'web',
+        emoji: '🍽️',
+        private: true,
+        demo: null,
+        repo: null,
+      },
+      {
         id: 8,
+        title: 'Stock Management (QR)',
+        desc: 'A stock management system utilising QR code scanning for real-time verification and monitoring of inventory across multiple locations.',
+        tags: ['Next.js', 'PostgreSQL', 'QR Code'],
+        category: 'web',
+        emoji: '📦',
+        private: true,
+        demo: null,
+        repo: null,
+      },
+      {
+        id: 9,
+        title: 'Udon City Tourism',
+        desc: 'A tourism platform showcasing attractions, accommodations, and local services in Udon City. Includes a map interface and attraction ratings.',
+        tags: ['Next.js', 'MongoDB'],
+        category: 'web',
+        emoji: '🗺️',
+        private: true,
+        demo: null,
+        repo: null,
+      },
+      {
+        id: 10,
         title: 'Gov Asset Information System',
         desc: 'A platform for managing government asset information and documentation — tracking procurement, depreciation, and physical location of assets.',
         tags: ['React', 'PostgreSQL'],
         category: 'web',
         emoji: '🏛️',
-        demo: '#',
-        repo: 'https://github.com/kimookpong',
+        private: true,
+        demo: null,
+        repo: null,
       },
       {
-        id: 9,
-        title: 'HRMS – Walailak University',
-        desc: 'Human Resource Management System for Walailak University. Handles employee records, leave requests, payroll data, and org-chart management.',
-        tags: ['Next.js', 'PostgreSQL'],
-        category: 'collaboration',
-        emoji: '👥',
-        demo: '#',
-        repo: 'https://github.com/thasala-dev/wu-coop',
-      },
-      {
-        id: 10,
+        id: 11,
         title: 'AB Game (Multi)',
         desc: 'A multiplayer version of the classic AB guessing game where players try to guess a 4-digit number with unique digits. Built with real-time WebSocket sync.',
         tags: ['TypeScript', 'Socket.io'],
         category: 'hobby',
         emoji: '🎮',
-        demo: '#',
+        private: true,
+        demo: null,
         repo: 'https://github.com/kimookpong/ab-game-multi',
-      },
-      {
-        id: 11,
-        title: 'StockLazer',
-        desc: 'Real-time stock management system that utilises QR code scanning for efficient inventory tracking. Supports multi-warehouse and live dashboard.',
-        tags: ['TypeScript', 'Next.js', 'QR Code'],
-        category: 'hobby',
-        emoji: '🔦',
-        demo: '#',
-        repo: 'https://github.com/kimookpong/stocklazer',
       },
     ],
     experience: [
@@ -372,10 +386,29 @@
       applyFilter(btn.dataset.filter);
     });
 
+    const THUMB_SVC = 'https://image.thum.io/get/width/1200/crop/900/noanimate/';
+
     // render cards
-    grid.innerHTML = projects.map(p => `
+    grid.innerHTML = projects.map(p => {
+      const hasDemo = p.demo && p.demo !== '#';
+      const screenshotUrl = hasDemo ? `${THUMB_SVC}${p.demo}` : null;
+      const thumb = hasDemo
+        ? `<div class="proj-preview">
+             <img class="proj-screenshot"
+               src="${screenshotUrl}"
+               alt="${p.title} screenshot"
+               loading="lazy"
+               onerror="this.parentElement.classList.add('proj-preview--error');this.style.display='none'">
+             <div class="proj-preview-emoji">${p.emoji || '💻'}</div>
+           </div>`
+        : `<div class="project-thumb-fallback">
+             ${p.private
+               ? `<div class="proj-private-badge"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M5.25 10.5h13.5A1.75 1.75 0 0120.5 12.25v7A1.75 1.75 0 0118.75 21H5.25A1.75 1.75 0 013.5 19.25v-7A1.75 1.75 0 015.25 10.5z"/></svg><span>Private</span></div>`
+               : p.emoji || '💻'}
+           </div>`;
+      return `
       <div class="project-card" data-id="${p.id}" data-category="${p.category}" role="button" tabindex="0">
-        <div class="project-thumb-fallback">${p.emoji || '💻'}</div>
+        ${thumb}
         <div class="project-body">
           <div class="project-tags">
             ${(p.tags || []).slice(0, 3).map(t => `<span class="tag">${t}</span>`).join('')}
@@ -384,8 +417,8 @@
           <div class="project-desc">${p.desc}</div>
           <div class="project-arrow">View Details <span>→</span></div>
         </div>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
 
     $$('.project-card', grid).forEach((card, i) => {
       addReveal(card, i * 70);
@@ -435,11 +468,26 @@
     tagsEl.innerHTML = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
 
     const imgEl = document.getElementById('modalImg');
-    if (p.image) {
-      imgEl.src = p.image;
-      imgEl.style.display = '';
-    } else {
-      imgEl.style.display = 'none';
+    const modalPreview = document.getElementById('modalPreview');
+
+    if (modalPreview) modalPreview.innerHTML = '';
+    if (imgEl) imgEl.style.display = 'none';
+
+    if (p.demo && p.demo !== '#' && modalPreview) {
+      const ss = `https://image.thum.io/get/width/1200/crop/675/noanimate/${p.demo}`;
+      modalPreview.innerHTML = `
+        <div class="modal-iframe-wrap">
+          <img class="modal-screenshot" src="${ss}" alt="${p.title} preview" loading="lazy"
+            onerror="this.parentElement.classList.add('modal-ss--error')">
+        </div>`;
+      modalPreview.style.display = '';
+    } else if (modalPreview) {
+      modalPreview.innerHTML = `<div class="modal-preview-fallback">
+        ${p.private
+          ? `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M5.25 10.5h13.5A1.75 1.75 0 0120.5 12.25v7A1.75 1.75 0 0118.75 21H5.25A1.75 1.75 0 013.5 19.25v-7A1.75 1.75 0 015.25 10.5z"/></svg><p>Private Repository</p>`
+          : `<span style="font-size:3rem">${p.emoji || '💻'}</span>`}
+      </div>`;
+      modalPreview.style.display = '';
     }
 
     const demoEl = document.getElementById('modalDemo');
@@ -456,48 +504,14 @@
   function closeModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
+    // clear iframe to stop any background loading
+    const mp = document.getElementById('modalPreview');
+    if (mp) mp.innerHTML = '';
   }
 
   modalClose.addEventListener('click', closeModal);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-  /* ── Contact form ─────────────────────────────────────────────── */
-  const form       = document.getElementById('contactForm');
-  const formStatus = document.getElementById('formStatus');
-  const formSubmit = document.getElementById('formSubmit');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form));
-    formSubmit.disabled = true;
-    formSubmit.textContent = 'Sending…';
-    formStatus.className = 'form-status';
-    formStatus.textContent = '';
-
-    try {
-      if (API_BASE) {
-        const res = await fetch(API_BASE + '/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        if (!res.ok) throw new Error('server');
-      } else {
-        // Static mode: simulate success
-        await new Promise(r => setTimeout(r, 800));
-      }
-      formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
-      formStatus.className = 'form-status ok';
-      form.reset();
-    } catch {
-      formStatus.textContent = '✗ Something went wrong. Please email me directly.';
-      formStatus.className = 'form-status err';
-    } finally {
-      formSubmit.disabled = false;
-      formSubmit.textContent = 'Send Message';
-    }
-  });
 
   /* ── Init – fetch or use fallback ──────────────────────────────── */
   async function init() {

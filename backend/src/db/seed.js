@@ -39,28 +39,36 @@ async function seed() {
     /* ── Skills ──────────────────────────────────────────────── */
     const skillData = [
       { category: 'Frontend', icon: '🎨', order: 1, items: [
-          { name: 'Next.js / React',  level: 'advanced'     },
+          { name: 'Next.js',          level: 'advanced'     },
           { name: 'TypeScript',       level: 'advanced'     },
           { name: 'Tailwind CSS',     level: 'advanced'     },
+          { name: 'Bootstrap',        level: 'advanced'     },
+          { name: 'React Native',     level: 'advanced'     },
           { name: 'Line OA / LIFF',   level: 'intermediate' },
       ]},
       { category: 'Backend', icon: '⚙️', order: 2, items: [
           { name: 'Node.js / Express', level: 'advanced'     },
-          { name: 'Python',            level: 'intermediate' },
-          { name: 'REST API',          level: 'advanced'     },
+          { name: 'Yii2',              level: 'advanced'     },
+          { name: 'CodeIgniter',       level: 'advanced'     },
           { name: 'PHP / Laravel',     level: 'intermediate' },
+          { name: 'Python',            level: 'intermediate' },
+          { name: 'Go',                level: 'basic'        },
+          { name: 'REST API',          level: 'advanced'     },
       ]},
       { category: 'Database', icon: '🗄️', order: 3, items: [
           { name: 'PostgreSQL', level: 'advanced'     },
           { name: 'MongoDB',    level: 'advanced'     },
-          { name: 'MySQL',      level: 'intermediate' },
+          { name: 'MySQL',      level: 'advanced'     },
+          { name: 'Oracle',     level: 'intermediate' },
           { name: 'Redis',      level: 'basic'        },
       ]},
-      { category: 'Tools & DevOps', icon: '🚀', order: 4, items: [
+      { category: 'Infrastructure', icon: '🚀', order: 4, items: [
           { name: 'Git / GitHub',     level: 'advanced'     },
           { name: 'Docker',           level: 'intermediate' },
+          { name: 'Ubuntu Server',    level: 'intermediate' },
+          { name: 'Nginx',            level: 'basic'        },
+          { name: 'Apache',           level: 'basic'        },
           { name: 'Vercel / Railway', level: 'advanced'     },
-          { name: 'Linux / Bash',     level: 'intermediate' },
       ]},
     ];
 
