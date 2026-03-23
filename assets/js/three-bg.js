@@ -26,7 +26,7 @@
 
   const colorA = new THREE.Color(0x22c55e); // accent
   const colorB = new THREE.Color(0x86efac); // accent-2
-  const colorC = new THREE.Color(0x0a0f0a); // bg (dim)
+  const colorC = new THREE.Color(0x0a0a0f); // bg (dim)
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     const i3 = i * 3;

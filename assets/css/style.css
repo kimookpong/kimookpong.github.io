@@ -4,16 +4,16 @@
 
 /* ── CSS Variables ─────────────────────────────────────────────── */
 :root {
-  --bg:        #0a0f0a;
-  --bg-alt:    #0d150d;
-  --surface:   #111a11;
-  --surface-2: #172017;
+  --bg:        #0a0a0f;
+  --bg-alt:    #0f0f1a;
+  --surface:   #14141f;
+  --surface-2: #1c1c2e;
   --border:    rgba(255,255,255,.07);
   --accent:    #22c55e;
   --accent-2:  #86efac;
   --text:      #e8e8f0;
-  --text-muted:#8888aa;
-  --text-dim:  #555577;
+  --text-muted:#94a3b8;
+  --text-dim:  #64748b;
   --white:     #ffffff;
   --radius:    12px;
   --radius-lg: 20px;
