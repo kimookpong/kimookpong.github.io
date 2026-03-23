@@ -24,9 +24,9 @@
   const colors    = new Float32Array(PARTICLE_COUNT * 3);
   const speeds    = new Float32Array(PARTICLE_COUNT);
 
-  const colorA = new THREE.Color(0x6c63ff); // accent
-  const colorB = new THREE.Color(0xa78bfa); // accent-2
-  const colorC = new THREE.Color(0x0a0a0f); // bg (dim)
+  const colorA = new THREE.Color(0x22c55e); // accent
+  const colorB = new THREE.Color(0x86efac); // accent-2
+  const colorC = new THREE.Color(0x0a0f0a); // bg (dim)
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     const i3 = i * 3;
@@ -62,7 +62,7 @@
   /* ── Torus knot ────────────────────────────────────────────── */
   const torusGeo = new THREE.TorusKnotGeometry(9, 2.4, 160, 18, 2, 3);
   const torusMat = new THREE.MeshBasicMaterial({
-    color: 0x6c63ff,
+    color: 0x22c55e,
     wireframe: true,
     transparent: true,
     opacity: 0.07,
@@ -74,7 +74,7 @@
   /* ── Ring ──────────────────────────────────────────────────── */
   const ringGeo = new THREE.TorusGeometry(14, 0.15, 4, 90);
   const ringMat = new THREE.MeshBasicMaterial({
-    color: 0xa78bfa,
+    color: 0x86efac,
     transparent: true,
     opacity: 0.08,
   });
@@ -86,7 +86,7 @@
   /* ── Icosahedron ───────────────────────────────────────────── */
   const icoGeo = new THREE.IcosahedronGeometry(6, 1);
   const icoMat = new THREE.MeshBasicMaterial({
-    color: 0x6c63ff,
+    color: 0x22c55e,
     wireframe: true,
     transparent: true,
     opacity: 0.06,

@@ -191,6 +191,16 @@
         demo: null,
         repo: 'https://github.com/kimookpong/ab-game-multi',
       },
+      {
+        id: 12,
+        title: 'Timere',
+        desc: 'A clean and minimal time tracking app. Built as a personal hobby project to explore modern frontend tooling with Vite.',
+        tags: ['Vite'],
+        category: 'hobby',
+        emoji: '⏱️',
+        demo: 'https://timere.vercel.app/',
+        repo: 'https://github.com/kimookpong',
+      },
     ],
     experience: [
       {
@@ -552,39 +562,72 @@
   };
 
   function loadGitHubData() {
-    const GH = 'https://api.github.com';
+    const GH   = 'https://api.github.com';
     const USER = 'kimookpong';
+    const CACHE_KEY = 'gh_cache_v1';
+    const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+    const GH_HEADERS = { headers: { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' } };
 
-    // Profile stats
-    fetch(`${GH}/users/${USER}`)
-      .then(r => r.json())
-      .then(u => {
-        const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-        set('ghRepos',      u.public_repos);
-        set('ghFollowers',  u.followers);
-        set('ghFollowing',  u.following);
+    function ghFetch(url) {
+      return fetch(url, GH_HEADERS).then(r => {
+        if (!r.ok) throw new Error(`GitHub API ${r.status}`);
+        return r.json();
+      });
+    }
 
-        // sum stars across repos + build language stats
-        fetch(`${GH}/users/${USER}/repos?per_page=100`)
-          .then(r => r.json())
+    function loadFromCache() {
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const { ts, data } = JSON.parse(raw);
+        if (Date.now() - ts > CACHE_TTL) return null;
+        return data;
+      } catch { return null; }
+    }
+
+    function saveToCache(data) {
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch {}
+    }
+
+    function applyGitHubData({ user, repos }) {
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      set('ghRepos',     user.public_repos);
+      set('ghFollowers', user.followers);
+      set('ghFollowing', user.following);
+
+      const ownRepos = repos.filter(r => !r.fork);
+      const stars = ownRepos.reduce((acc, r) => acc + r.stargazers_count, 0);
+      set('ghStars', stars);
+
+      const langCount = {};
+      ownRepos.forEach(r => { if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1; });
+      renderLangStats(langCount);
+
+      renderRepos(ownRepos.sort((a, b) =>
+        new Date(b.updated_at) - new Date(a.updated_at)
+      ).slice(0, 12));
+    }
+
+    // Try cache first
+    const cached = loadFromCache();
+    if (cached) {
+      applyGitHubData(cached);
+      return;
+    }
+
+    // Fetch fresh data
+    ghFetch(`${GH}/users/${USER}`)
+      .then(user =>
+        ghFetch(`${GH}/users/${USER}/repos?per_page=100&sort=updated`)
           .then(repos => {
-            const ownRepos = repos.filter(r => !r.fork);
-            const stars = ownRepos.reduce((acc, r) => acc + r.stargazers_count, 0);
-            set('ghStars', stars);
-
-            // count repos per language
-            const langCount = {};
-            ownRepos.forEach(r => {
-              if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1;
-            });
-            renderLangStats(langCount);
-
-            renderRepos(ownRepos.sort((a, b) =>
-              new Date(b.updated_at) - new Date(a.updated_at)
-            ).slice(0, 12));
-          });
-      })
-      .catch(() => {});
+            const payload = { user, repos };
+            saveToCache(payload);
+            applyGitHubData(payload);
+          })
+      )
+      .catch(err => {
+        console.warn('GitHub API failed:', err.message);
+      });
   }
 
   function renderLangStats(langCount) {
@@ -599,14 +642,14 @@
     // Stacked bar
     const barSegs = sorted.map(([lang, count]) => {
       const pct = (count / total * 100).toFixed(1);
-      const color = LANG_COLOR[lang] || '#6c63ff';
+      const color = LANG_COLOR[lang] || '#22c55e';
       return `<span class="lang-bar-seg" style="width:${pct}%;background:${color}" title="${lang} ${pct}%"></span>`;
     }).join('');
 
     // Legend rows
     const legend = sorted.map(([lang, count]) => {
       const pct = (count / total * 100).toFixed(1);
-      const color = LANG_COLOR[lang] || '#6c63ff';
+      const color = LANG_COLOR[lang] || '#22c55e';
       return `
         <div class="lang-row">
           <span class="lang-dot" style="background:${color}"></span>
