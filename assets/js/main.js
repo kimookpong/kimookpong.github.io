@@ -1,19 +1,11 @@
 /* ================================================================
    MAIN.JS – Portfolio logic
-   • Fetches data from /api/* (falls back to inline data if server
-     is not running – for GitHub Pages static hosting)
+   • Static site – all data is inline (FALLBACK object below)
    • Typing animation, parallax, reveal-on-scroll, navbar, modal,
-     filter, contact form
+     filter, GitHub API stats
    ================================================================ */
 (function () {
   'use strict';
-
-  /* ── API base ─────────────────────────────────────────────────
-     If you run the Node backend locally or on a server,
-     set API_BASE to its URL, e.g. 'http://localhost:3000'.
-     For static GitHub Pages, set to '' (uses fallback data).
-  ─────────────────────────────────────────────────────────────── */
-  const API_BASE = '';   // ← change to your backend URL when deployed
 
   /* ──────────────────────────────────────────────────────────────
      FALLBACK DATA – sourced from kimookpong.vercel.app
@@ -246,13 +238,6 @@
   /* ── Helpers ──────────────────────────────────────────────────── */
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
-
-  async function apiFetch(path) {
-    if (!API_BASE) throw new Error('no api');
-    const res = await fetch(API_BASE + path);
-    if (!res.ok) throw new Error(res.status);
-    return res.json();
-  }
 
   /* ── Loader ───────────────────────────────────────────────────── */
   window.addEventListener('load', () => {
@@ -532,20 +517,9 @@
   overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-  /* ── Init – fetch or use fallback ──────────────────────────────── */
-  async function init() {
-    let profile, skills, projects, experience;
-
-    try {
-      [profile, skills, projects, experience] = await Promise.all([
-        apiFetch('/api/profile'),
-        apiFetch('/api/skills'),
-        apiFetch('/api/projects'),
-        apiFetch('/api/experience'),
-      ]);
-    } catch {
-      ({ profile, skills, projects, experience } = FALLBACK);
-    }
+  /* ── Init ──────────────────────────────────────────────────────── */
+  function init() {
+    const { profile, skills, projects, experience } = FALLBACK;
 
     renderProfile(profile);
     renderSkills(skills);

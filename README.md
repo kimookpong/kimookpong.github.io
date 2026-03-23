@@ -1,4 +1,85 @@
-# Portfolio – kimookpong.github.io
+# kimookpong.github.io
+
+Personal portfolio site for **Hakim Mudor** — System Analyst & Freelance Developer.
+
+🌐 **Live:** [kimookpong.github.io](https://kimookpong.github.io)
+
+---
+
+## Features
+
+- **Three.js** WebGL background — animated particles, torus knot, ring, icosahedron
+- **Parallax** scrolling (CSS + JS mouse tracking)
+- **Reveal on scroll** animations via IntersectionObserver
+- **Typing animation** for role titles
+- **GitHub Activity** — live stats, language breakdown, repos (cached 1 hr via localStorage)
+- **Project cards** — screenshot previews via thum.io, private badge for non-public projects
+- **Skills grid** — 4 columns with level badges (basic / intermediate / advanced)
+- Mobile-first responsive design
+
+---
+
+## Project Structure
+
+```
+kimookpong.github.io/
+├── index.html
+└── assets/
+    ├── css/
+    │   └── style.css          # All styles + CSS variables
+    ├── js/
+    │   ├── three-bg.js        # Three.js WebGL background
+    │   └── main.js            # All portfolio logic & inline data
+    └── img/
+        └── github-chart.svg   # GitHub contribution chart (update manually)
+```
+
+---
+
+## Customisation
+
+All content lives in the `FALLBACK` object at the top of `assets/js/main.js`:
+
+| Section | What to edit |
+|---------|-------------|
+| Profile | `FALLBACK.profile` — name, bio, roles, avatar |
+| Skills | `FALLBACK.skills` — categories, items, levels |
+| Projects | `FALLBACK.projects` — title, desc, tags, demo, repo |
+| Experience | `FALLBACK.experience` — date, role, company, desc |
+
+### Update GitHub contribution chart
+
+```bash
+curl -s "https://ghchart.rshah.org/22c55e/kimookpong" \
+  | sed 's/fill:#EEEEEE/fill:#0d150d/g' \
+  | sed 's/fill:#767676/fill:#64748b/g' \
+  | sed 's/<svg version="1\.1"/<svg version="1.1" viewBox="0 0 663 104" preserveAspectRatio="xMidYMid meet"/' \
+  | sed 's/width="663"/width="100%"/' \
+  | sed 's/height="104"/height="auto"/' \
+  > assets/img/github-chart.svg
+```
+
+### Deploy
+
+```bash
+git add .
+git commit -m "update content"
+git push origin main
+```
+
+GitHub Pages serves the site automatically from the `main` branch.
+
+---
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Frontend | HTML5, CSS3, Vanilla JS |
+| 3D / Animation | Three.js r134, CSS keyframes, IntersectionObserver |
+| GitHub Stats | GitHub REST API (public, cached 1 hr in localStorage) |
+| Screenshot previews | [thum.io](https://image.thum.io) (no API key required) |
+| Hosting | GitHub Pages |
 
 Modern personal portfolio with:
 - **Three.js** WebGL particle background + rotating torus knot, ring, and icosahedron
