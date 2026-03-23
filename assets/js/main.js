@@ -518,13 +518,126 @@
     renderSkills(skills);
     renderProjects(projects);
     renderExperience(experience);
+    loadGitHubData();
 
     // reveal about section
     $$('#about h2, #about p, #about .btn-outline, .about-stats').forEach((el, i) => addReveal(el, i * 80));
+    $$('#github-activity .section-label, #github-activity .section-title').forEach((el, i) => addReveal(el, i * 60));
+    $$('#github-activity .gh-profile-stats, #github-activity .gh-contrib-wrap, #github-activity .gh-repos-header').forEach((el, i) => addReveal(el, i * 80));
     $$('#skills .section-label, #skills .section-title').forEach((el, i) => addReveal(el, i * 60));
     $$('#projects .section-label, #projects .section-title').forEach((el, i) => addReveal(el, i * 60));
     $$('#experience .section-label, #experience .section-title').forEach((el, i) => addReveal(el, i * 60));
     $$('#contact .contact-heading, #contact .contact-sub, #contact .contact-form, #contact .social-links').forEach((el, i) => addReveal(el, i * 80));
+  }
+
+  /* ── GitHub live data ─────────────────────────────────────────── */
+  const LANG_COLOR = {
+    JavaScript: '#f7df1e', TypeScript: '#3178c6', Python: '#3572A5',
+    PHP: '#777bb4', HTML: '#e34c26', CSS: '#563d7c', Vue: '#42b883',
+    Svelte: '#ff3e00', Dart: '#00b4ab', Shell: '#89e051',
+  };
+
+  function loadGitHubData() {
+    const GH = 'https://api.github.com';
+    const USER = 'kimookpong';
+
+    // Profile stats
+    fetch(`${GH}/users/${USER}`)
+      .then(r => r.json())
+      .then(u => {
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        set('ghRepos',      u.public_repos);
+        set('ghFollowers',  u.followers);
+        set('ghFollowing',  u.following);
+
+        // sum stars across repos + build language stats
+        fetch(`${GH}/users/${USER}/repos?per_page=100`)
+          .then(r => r.json())
+          .then(repos => {
+            const ownRepos = repos.filter(r => !r.fork);
+            const stars = ownRepos.reduce((acc, r) => acc + r.stargazers_count, 0);
+            set('ghStars', stars);
+
+            // count repos per language
+            const langCount = {};
+            ownRepos.forEach(r => {
+              if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1;
+            });
+            renderLangStats(langCount);
+
+            renderRepos(ownRepos.sort((a, b) =>
+              new Date(b.updated_at) - new Date(a.updated_at)
+            ).slice(0, 12));
+          });
+      })
+      .catch(() => {});
+  }
+
+  function renderLangStats(langCount) {
+    const el = document.getElementById('ghLangStats');
+    if (!el) return;
+
+    const sorted = Object.entries(langCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8);
+    const total = sorted.reduce((s, [, v]) => s + v, 0);
+
+    // Stacked bar
+    const barSegs = sorted.map(([lang, count]) => {
+      const pct = (count / total * 100).toFixed(1);
+      const color = LANG_COLOR[lang] || '#6c63ff';
+      return `<span class="lang-bar-seg" style="width:${pct}%;background:${color}" title="${lang} ${pct}%"></span>`;
+    }).join('');
+
+    // Legend rows
+    const legend = sorted.map(([lang, count]) => {
+      const pct = (count / total * 100).toFixed(1);
+      const color = LANG_COLOR[lang] || '#6c63ff';
+      return `
+        <div class="lang-row">
+          <span class="lang-dot" style="background:${color}"></span>
+          <span class="lang-name">${lang}</span>
+          <div class="lang-track"><div class="lang-fill" style="width:${pct}%;background:${color}"></div></div>
+          <span class="lang-pct">${pct}%</span>
+          <span class="lang-count">${count} repo${count > 1 ? 's' : ''}</span>
+        </div>`;
+    }).join('');
+
+    el.innerHTML = `<div class="lang-bar">${barSegs}</div><div class="lang-legend">${legend}</div>`;
+  }
+
+  function renderRepos(repos) {
+    const grid = document.getElementById('ghReposGrid');
+    if (!grid) return;
+    grid.innerHTML = repos.map(r => {
+      const lang = r.language || '';
+      const dot  = LANG_COLOR[lang]
+        ? `<span class="repo-lang-dot" style="background:${LANG_COLOR[lang]}"></span>`
+        : '';
+      const desc = r.description ? `<p class="repo-desc">${r.description}</p>` : '';
+      const updated = new Date(r.updated_at).toLocaleDateString('en-GB', { year:'numeric', month:'short' });
+      return `
+        <a class="repo-card reveal" href="${r.html_url}" target="_blank" rel="noopener">
+          <div class="repo-top">
+            <svg class="repo-icon" viewBox="0 0 16 16" fill="currentColor" width="14" height="14">
+              <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h7A2.5 2.5 0 0 1 14 2.5v10.5a.5.5 0 0 1-.777.416L8 10.101l-5.223 3.315A.5.5 0 0 1 2 13V2.5z"/>
+            </svg>
+            <span class="repo-name">${r.name}</span>
+          </div>
+          ${desc}
+          <div class="repo-meta">
+            <span class="repo-lang">${dot}${lang}</span>
+            <span class="repo-updated">${updated}</span>
+            ${r.stargazers_count > 0 ? `<span class="repo-stars">★ ${r.stargazers_count}</span>` : ''}
+          </div>
+        </a>`;
+    }).join('');
+
+    // observe each card for reveal animation
+    $$('.repo-card', grid).forEach((el, i) => {
+      el.style.transitionDelay = (i % 4) * 60 + 'ms';
+      revealObs.observe(el);
+    });
   }
 
   init();
