@@ -187,8 +187,7 @@
         tags: ['TypeScript', 'Socket.io'],
         category: 'hobby',
         emoji: '🎮',
-        private: true,
-        demo: null,
+        demo: 'https://ab-game.vercel.app/',
         repo: 'https://github.com/kimookpong/ab-game-multi',
       },
       {
@@ -200,6 +199,16 @@
         emoji: '⏱️',
         demo: 'https://timere.vercel.app/',
         repo: 'https://github.com/kimookpong',
+      },
+      {
+        id: 13,
+        title: 'Level Up',
+        desc: 'A game top-up platform supporting multiple game titles. Features a clean storefront, item selection, and secure payment processing via Omise.',
+        tags: ['Next.js', 'Omise'],
+        category: 'hobby',
+        emoji: '🎓',
+        demo: 'https://levelup-plus.vercel.app/',
+        repo: 'https://github.com/kimookpong/levelup',
       },
     ],
     experience: [
