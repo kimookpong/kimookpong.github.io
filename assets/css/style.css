@@ -569,7 +569,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ── GitHub profile quick stats ────────────────────────────────── */
 .gh-profile-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -792,7 +792,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* Responsive */
 @media (max-width: 768px) {
   .gh-cal-header { flex-direction: column; align-items: flex-start; }
-  .gh-profile-stats { grid-template-columns: repeat(2, 1fr); }
+  .gh-profile-stats { grid-template-columns: repeat(3, 1fr); }
   .gh-repos-grid { grid-template-columns: 1fr; }
 }
 
