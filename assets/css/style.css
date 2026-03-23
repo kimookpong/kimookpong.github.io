@@ -549,14 +549,33 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   display: block;
 }
 
-/* Contribution heatmap chart */
-.gh-contrib-chart {
+/* Contribution heatmap chart (inline SVG injected by JS) */
+.gh-contrib-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+.gh-contrib-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gh-contrib-loading {
+  display: block;
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--text-dim);
+  font-size: .85rem;
+  font-family: var(--mono);
+}
+
+/* <img> fallback: remap the light SVG to dark palette via CSS filter */
+.gh-contrib-img {
+  display: block;
   width: 100%;
   height: auto;
   border-radius: var(--radius);
-  display: block;
-  /* invert so the background matches dark theme */
-  filter: brightness(0.95) contrast(1.05);
+  /* invert whites→darks, then hue-rotate back to purple range */
+  filter: invert(1) hue-rotate(180deg) saturate(1.4) brightness(0.85);
 }
 
 /* Responsive */
