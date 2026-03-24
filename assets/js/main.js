@@ -143,7 +143,7 @@
       },
       {
         id: 8,
-        title: 'Stock Management (QR)',
+        title: 'Stock Management System',
         desc: 'A stock management system utilising QR code scanning for real-time verification and monitoring of inventory across multiple locations.',
         tags: ['Next.js', 'PostgreSQL', 'QR Code'],
         category: 'web',
