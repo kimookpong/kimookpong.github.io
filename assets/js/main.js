@@ -703,14 +703,19 @@
     });
   }
 
-  // Auto-start café sound on first user interaction (bypasses autoplay policy)
+  // Auto-start café sound on first real user interaction only
+  // (scroll is NOT a trusted gesture for AudioContext — excluded)
   function autoStartCafe() {
+    // Remove all listeners first to prevent double-fire
+    ['click', 'keydown', 'touchstart', 'pointerdown'].forEach(evt =>
+      document.removeEventListener(evt, autoStartCafe)
+    );
     if (window.cafeAmbience && !window.cafeAmbience.isPlaying) {
-      window.cafeAmbience.toggle(); // start
+      window.cafeAmbience.toggle();
       setCafeUI(true);
     }
   }
-  ['click', 'keydown', 'touchstart', 'scroll'].forEach(evt =>
-    document.addEventListener(evt, autoStartCafe, { once: true, passive: true })
+  ['click', 'keydown', 'touchstart', 'pointerdown'].forEach(evt =>
+    document.addEventListener(evt, autoStartCafe, { passive: true })
   );
 })();
