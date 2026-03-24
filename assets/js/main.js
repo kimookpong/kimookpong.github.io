@@ -52,6 +52,8 @@
           { name: 'MySQL',      level: 'advanced'     },
           { name: 'Oracle',     level: 'intermediate' },
           { name: 'Redis',      level: 'basic'        },
+          { name: 'Neon',       level: 'basic'        },
+          { name: 'Supabase',   level: 'basic'        },
         ],
       },
       {
