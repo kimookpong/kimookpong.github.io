@@ -688,12 +688,29 @@
 
   /* ── Café ambience toggle button ─────────────────────────────── */
   const cafeBtn = document.getElementById('cafeSoundBtn');
+
+  function setCafeUI(on) {
+    if (!cafeBtn) return;
+    cafeBtn.classList.toggle('cafe-on', on);
+    cafeBtn.querySelector('.cafe-icon-off').style.display = on ? 'none' : '';
+    cafeBtn.querySelector('.cafe-icon-on').style.display  = on ? ''     : 'none';
+  }
+
   if (cafeBtn) {
     cafeBtn.addEventListener('click', () => {
       const on = window.cafeAmbience && window.cafeAmbience.toggle();
-      cafeBtn.classList.toggle('cafe-on', on);
-      cafeBtn.querySelector('.cafe-icon-off').style.display = on ? 'none'  : '';
-      cafeBtn.querySelector('.cafe-icon-on').style.display  = on ? ''      : 'none';
+      setCafeUI(on);
     });
   }
+
+  // Auto-start café sound on first user interaction (bypasses autoplay policy)
+  function autoStartCafe() {
+    if (window.cafeAmbience && !window.cafeAmbience.isPlaying) {
+      window.cafeAmbience.toggle(); // start
+      setCafeUI(true);
+    }
+  }
+  ['click', 'keydown', 'touchstart', 'scroll'].forEach(evt =>
+    document.addEventListener(evt, autoStartCafe, { once: true, passive: true })
+  );
 })();
