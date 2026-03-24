@@ -168,8 +168,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .nav-burger.open span:nth-child(2) { opacity: 0; }
 .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── Café sound toggle button ──────────────────────────────────── */
-.nav-cafe-btn {
+/* ── Sound toggle group (keyboard + café together) ─────────────── */
+.nav-sound-group {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-shrink: 0;
+}
+
+/* ── Sound toggle buttons ───────────────────────────────────────── */
+.nav-sound-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -183,16 +191,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   transition: color var(--transition), border-color var(--transition), background var(--transition);
   flex-shrink: 0;
 }
-.nav-cafe-btn:hover {
+.nav-sound-btn:hover {
   color: var(--accent);
   border-color: var(--accent);
 }
-.nav-cafe-btn.cafe-on {
+.nav-sound-btn.cafe-on {
   background: var(--accent);
   border-color: var(--accent);
   color: #0a0a0f;
 }
-/* ripple pulse when playing */
+/* ripple pulse on active café button only */
 .nav-cafe-btn.cafe-on::after {
   content: '';
   position: absolute;
@@ -477,11 +485,10 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  transition: border-color var(--transition), transform var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
 .skill-card:hover {
   border-color: var(--accent);
-  transform: translateY(-4px);
 }
 
 .skill-card-header {
@@ -863,12 +870,11 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
-  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
   display: flex;
   flex-direction: column;
 }
 .project-card:hover {
-  transform: translateY(-6px);
   border-color: var(--accent);
   box-shadow: 0 16px 48px rgba(34,197,94,.2);
 }
@@ -1217,9 +1223,9 @@ footer {
   .nav-links.open { display: flex; }
   .nav-links a { font-size: 1.3rem; }
   .nav-burger { display: flex; }
-  /* Café btn sits left of burger, push both to right */
+  /* Sound group sits left of burger – push both to right */
   #navbar { gap: .5rem; }
-  .nav-cafe-btn { margin-left: auto; }
+  .nav-sound-group { margin-left: auto; }
 
   /* About */
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -1288,9 +1294,9 @@ footer {
   .modal-body { padding: 1.25rem; }
   .modal-body h3 { font-size: 1.2rem; }
 
-  /* Navbar café btn – smaller */
-  .nav-cafe-btn { width: 30px; height: 30px; }
-  .nav-cafe-btn::after { width: 30px; height: 30px; }
+  /* Navbar sound btns – smaller */
+  .nav-sound-btn { width: 30px; height: 30px; }
+  .nav-cafe-btn.cafe-on::after { width: 30px; height: 30px; }
 
   /* Timeline */
   .timeline-entry { padding-left: 1.25rem; }
@@ -1299,4 +1305,132 @@ footer {
 
 /* ── Selection ─────────────────────────────────────────────────── */
 ::selection { background: rgba(34,197,94,.35); color: var(--white); }
+
+/* ================================================================
+   PARALLAX SYSTEM
+   ================================================================ */
+
+/* ── Scroll-parallax layers ───────────────────────────────────── */
+[data-parallax-speed] {
+  will-change: transform;
+}
+
+/* ── Tilt card (3-D perspective wrapper) ──────────────────────── */
+[data-parallax-tilt] {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+[data-parallax-tilt]:hover {
+  box-shadow: 0 24px 64px rgba(0,0,0,.55), 0 0 0 1px rgba(34,197,94,.2);
+}
+
+/* Glare overlay injected by JS */
+.parallax-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .45s ease;
+  z-index: 10;
+  mix-blend-mode: overlay;
+}
+
+/* ── Floating idle animation ──────────────────────────────────── */
+@keyframes parallax-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33%       { transform: translateY(calc(var(--float-amp, 12px) * -1)) rotate(1deg); }
+  66%       { transform: translateY(calc(var(--float-amp, 12px) * .5)) rotate(-0.5deg); }
+}
+
+.parallax-floating {
+  animation: parallax-float var(--float-dur, 4s) ease-in-out var(--float-delay, 0s) infinite;
+  will-change: transform;
+}
+
+/* ── Magnetic elements ────────────────────────────────────────── */
+[data-parallax-magnetic] {
+  will-change: transform;
+  transition: transform .05s linear; /* smoothed in JS; CSS transition for snap-back */
+}
+[data-parallax-magnetic]:hover { cursor: pointer; }
+
+/* ── Section depth entrance ───────────────────────────────────── */
+/* Initial hidden state is set by JS (parallax.js) — not CSS.
+   This keeps sections visible if JS hasn't run yet (no-JS fallback). */
+.section.parallax-section-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.section.parallax-section-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .9s cubic-bezier(.22,1,.36,1),
+              transform .9s cubic-bezier(.22,1,.36,1);
+}
+
+/* ── Hero decorative orbs ─────────────────────────────────────── */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 0;
+}
+.hero-orb--1 {
+  width: clamp(300px, 45vw, 600px);
+  height: clamp(300px, 45vw, 600px);
+  top: -15%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(34,197,94,.12) 0%, transparent 70%);
+  filter: blur(60px);
+}
+.hero-orb--2 {
+  width: clamp(200px, 30vw, 420px);
+  height: clamp(200px, 30vw, 420px);
+  bottom: 10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(134,239,172,.07) 0%, transparent 65%);
+  filter: blur(80px);
+}
+.hero-orb--3 {
+  width: 6px; height: 6px;
+  top: 28%;
+  right: 22%;
+  background: var(--accent);
+  box-shadow: 0 0 16px 4px rgba(34,197,94,.6),
+              0 0 40px 8px rgba(34,197,94,.25);
+}
+
+/* ── Follow cursor elements ───────────────────────────────────── */
+[data-parallax-follow] {
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* ── Reveal animation enhancements ───────────────────────────── */
+/* Stagger cards inside sections that are already in view */
+.parallax-section-in .reveal {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* ── prefers-reduced-motion: strip all parallax ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax-speed],
+  [data-parallax-tilt],
+  [data-parallax-float],
+  [data-parallax-magnetic],
+  [data-parallax-follow] {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .parallax-floating { animation: none !important; }
+  .section.parallax-section-hidden,
+  .section.parallax-section-in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 

@@ -281,11 +281,11 @@
     const current = titles[tIdx];
     if (!deleting) {
       typingEl.textContent = current.slice(0, ++cIdx);
-      if (typeof window.kbClick === 'function') window.kbClick(false);
+      if (window.kbSoundEnabled && typeof window.kbClick === 'function') window.kbClick(false);
       if (cIdx === current.length) { deleting = true; setTimeout(typeStep, 1800); return; }
     } else {
       typingEl.textContent = current.slice(0, --cIdx);
-      if (typeof window.kbClick === 'function') window.kbClick(true);
+      if (window.kbSoundEnabled && typeof window.kbClick === 'function') window.kbClick(true);
       if (cIdx === 0) { deleting = false; tIdx = (tIdx + 1) % titles.length; setTimeout(typeStep, 400); return; }
     }
     setTimeout(typeStep, deleting ? 45 : 80);
@@ -332,7 +332,7 @@
     if (!grid) return;
 
     grid.innerHTML = skills.map((cat) => `
-      <div class="skill-card">
+      <div class="skill-card" data-parallax-tilt="8" data-parallax-glare="true">
         <div class="skill-card-header">
           <div class="skill-icon">${cat.icon}</div>
           <div class="skill-category">${cat.category}</div>
@@ -351,6 +351,7 @@
     $$('.skill-card', grid).forEach((card, i) => {
       addReveal(card, i * 80);
     });
+    if (typeof window.parallaxRefresh === 'function') window.parallaxRefresh();
   }
 
   /* ── Render profile ───────────────────────────────────────────── */
@@ -415,7 +416,7 @@
                : `<div class="proj-preview-icon">${p.icon || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div>`}
            </div>`;
       return `
-      <div class="project-card" data-id="${p.id}" data-category="${p.category}" role="button" tabindex="0">
+      <div class="project-card" data-id="${p.id}" data-category="${p.category}" data-parallax-tilt="7" data-parallax-glare="true" role="button" tabindex="0">
         ${thumb}
         <div class="project-body">
           <div class="project-tags">
@@ -433,6 +434,7 @@
       card.addEventListener('click', () => openModal(parseInt(card.dataset.id)));
       card.addEventListener('keydown', (e) => { if (e.key === 'Enter') openModal(parseInt(card.dataset.id)); });
     });
+    if (typeof window.parallaxRefresh === 'function') window.parallaxRefresh();
   }
 
   function applyFilter(filter) {
@@ -685,6 +687,16 @@
   }
 
   init();
+
+  /* ── Keyboard sound toggle ───────────────────────────────────── */
+  window.kbSoundEnabled = true; // on by default
+  const kbBtn = document.getElementById('kbSoundBtn');
+  if (kbBtn) {
+    kbBtn.addEventListener('click', () => {
+      window.kbSoundEnabled = !window.kbSoundEnabled;
+      kbBtn.classList.toggle('cafe-on', window.kbSoundEnabled);
+    });
+  }
 
   /* ── Café ambience toggle button ─────────────────────────────── */
   const cafeBtn = document.getElementById('cafeSoundBtn');

@@ -40,28 +40,38 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#contact" class="btn-outline-sm">Contact</a></li>
   </ul>
-  <button class="nav-cafe-btn" id="cafeSoundBtn" aria-label="Toggle café ambience" title="Café Ambience">
-    <svg class="cafe-icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-    <svg class="cafe-icon-on" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4" stroke="white" stroke-width="2"/><line x1="10" y1="1" x2="10" y2="4" stroke="white" stroke-width="2"/><line x1="14" y1="1" x2="14" y2="4" stroke="white" stroke-width="2"/></svg>
-  </button>
   <button class="nav-burger" id="navBurger" aria-label="menu">
     <span></span><span></span><span></span>
   </button>
+  <div class="nav-sound-group">
+    <button class="nav-kb-btn nav-sound-btn cafe-on" id="kbSoundBtn" aria-label="Toggle typing sound" title="Typing Sound">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M10 14h.01M14 14h.01M18 14h.01"/></svg>
+    </button>
+    <button class="nav-cafe-btn nav-sound-btn" id="cafeSoundBtn" aria-label="Toggle café ambience" title="Café Ambience">
+      <svg class="cafe-icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      <svg class="cafe-icon-on" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4" stroke="white" stroke-width="2"/><line x1="10" y1="1" x2="10" y2="4" stroke="white" stroke-width="2"/><line x1="14" y1="1" x2="14" y2="4" stroke="white" stroke-width="2"/></svg>
+    </button>
+  </div>
 </nav>
 
 <!-- ─── HERO ──────────────────────────────────────────────────── -->
 <section id="hero">
-  <div class="hero-content" data-parallax="0.3">
+  <!-- Floating decorative orbs -->
+  <div class="hero-orb hero-orb--1" data-parallax-follow="0.03" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb--2" data-parallax-follow="0.06" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb--3" data-parallax-float="18" data-parallax-float-dur="6" aria-hidden="true"></div>
+
+  <div class="hero-content" data-parallax-speed="0.25">
     <p class="hero-eyebrow">Hello, I'm</p>
     <h1 class="hero-name">Hakim Mudor<span class="accent">.</span></h1>
     <p class="hero-title typing-text" id="typingText"></p>
     <p class="hero-sub">Freelance Developer · System Analyst @ Walailak University · Nakhon Si Thammarat 🇹🇭</p>
     <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View Work</a>
-      <a href="#contact" class="btn-ghost">Get in Touch</a>
+      <a href="#projects" class="btn-primary" data-parallax-magnetic="0.45">View Work</a>
+      <a href="#contact" class="btn-ghost" data-parallax-magnetic="0.35">Get in Touch</a>
     </div>
   </div>
-  <div class="scroll-indicator">
+  <div class="scroll-indicator" data-parallax-speed="0.4">
     <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
@@ -72,7 +82,7 @@
   <div class="container">
     <div class="section-label">01 / About</div>
     <div class="about-grid">
-      <div class="about-photo-wrap" data-parallax="0.15">
+      <div class="about-photo-wrap" data-parallax-speed="0.12" data-parallax-tilt="10" data-parallax-glare="true">
         <div class="about-photo-bg"></div>
         <img src="https://avatars.githubusercontent.com/u/78400565?v=4" alt="Hakim Mudor" class="about-photo" id="avatarImg"
              onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex'" />
@@ -174,7 +184,7 @@
     <div class="section-label">06 / Contact</div>
     <h2 class="contact-heading">Have a Project in Mind?<br><span class="accent">Let's Talk.</span></h2>
     <p class="contact-sub">Whether it's a freelance project, a collaboration, or just want to say hi — feel free to reach out via Facebook 🙂</p>
-    <a href="https://www.facebook.com/mudor.hakim/" target="_blank" rel="noopener" class="btn-primary contact-fb-btn">
+    <a href="https://www.facebook.com/mudor.hakim/" target="_blank" rel="noopener" class="btn-primary contact-fb-btn" data-parallax-magnetic="0.4">
       <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
       Message on Facebook
     </a>
@@ -219,6 +229,7 @@
 <script src="assets/js/three-bg.js" defer></script>
 <script src="assets/js/keyboard-sound.js" defer></script>
 <script src="assets/js/cafe-ambience.js" defer></script>
+<script src="assets/js/parallax.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 
 </body>
