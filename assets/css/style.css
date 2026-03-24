@@ -495,7 +495,12 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   border-radius: 10px;
   background: linear-gradient(135deg, rgba(34,197,94,.2), rgba(134,239,172,.2));
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.skill-icon svg {
+  width: 20px; height: 20px;
+  stroke: var(--accent);
 }
 .skill-category { font-weight: 600; color: var(--white); font-size: .95rem; }
 
@@ -908,19 +913,24 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .project-card:hover .proj-screenshot {
   transform: scale(1.04);
 }
-/* Fallback emoji shown beneath while screenshot loads */
-.proj-preview-emoji {
+/* Fallback icon shown beneath while screenshot loads */
+.proj-preview-icon {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
   z-index: 0;
+  color: var(--accent);
+  opacity: .25;
 }
-/* If screenshot errors, show emoji fallback */
+.proj-preview-icon svg {
+  width: 48px; height: 48px;
+  stroke: var(--accent);
+}
+/* If screenshot errors, show icon fallback */
 .proj-preview--error .proj-screenshot { display: none !important; }
-.proj-preview--error .proj-preview-emoji { z-index: 1; }
+.proj-preview--error .proj-preview-icon { z-index: 1; opacity: .5; }
 /* Private badge shown instead of thumbnail */
 .proj-private-badge {
   display: flex;
@@ -974,6 +984,11 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   color: var(--text-muted);
 }
 .modal-preview-fallback svg { opacity: .4; }
+.modal-preview-icon svg {
+  width: 64px; height: 64px;
+  stroke: var(--accent);
+  opacity: .45;
+}
 .modal-preview-fallback p {
   font-size: .85rem;
   font-family: var(--mono);

@@ -22,7 +22,7 @@
     },
     skills: [
       {
-        category: 'Frontend', icon: '🎨',
+        category: 'Frontend', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
         items: [
           { name: 'Next.js',         level: 'advanced'     },
           { name: 'TypeScript',      level: 'advanced'     },
@@ -33,7 +33,7 @@
         ],
       },
       {
-        category: 'Backend', icon: '⚙️',
+        category: 'Backend', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
         items: [
           { name: 'Node.js / Express', level: 'advanced'     },
           { name: 'Yii2',              level: 'advanced'     },
@@ -45,7 +45,7 @@
         ],
       },
       {
-        category: 'Database', icon: '🗄️',
+        category: 'Database', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>',
         items: [
           { name: 'PostgreSQL', level: 'advanced'     },
           { name: 'MongoDB',    level: 'advanced'     },
@@ -57,7 +57,7 @@
         ],
       },
       {
-        category: 'Infrastructure', icon: '🚀',
+        category: 'Infrastructure', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
         items: [
           { name: 'Git / GitHub',     level: 'advanced'     },
           { name: 'Docker',           level: 'intermediate' },
@@ -75,7 +75,7 @@
         desc: 'A platform for managing pharmacy clerkship programs at Walailak University. Handles scheduling, student progress tracking, and supervisor evaluations.',
         tags: ['React', 'PostgreSQL'],
         category: 'web',
-        emoji: '💊',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>',
         demo: 'https://www.pharmwuclerkship.com/',
         repo: 'https://github.com/kimookpong',
       },
@@ -85,7 +85,7 @@
         desc: 'Thailand Community Network Assessment Project — a data collection and reporting platform for community health network assessments across Thailand.',
         tags: ['Next.js', 'PostgreSQL'],
         category: 'web',
-        emoji: '🏥',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
         demo: 'https://tcnap.org/',
         repo: 'https://github.com/kimookpong',
       },
@@ -95,7 +95,7 @@
         desc: 'A platform for managing pharmacy alumni relations at Walailak University. Tracks graduate careers, events, and alumni networking.',
         tags: ['Next.js', 'PostgreSQL'],
         category: 'web',
-        emoji: '🎓',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
         demo: 'https://www.pharmwualumni.com/',
         repo: 'https://github.com/thasala-dev/alumni',
       },
@@ -105,7 +105,7 @@
         desc: 'Human Resource Management System for Walailak University. Handles employee records, leave requests, payroll data, and org-chart management.',
         tags: ['Next.js', 'PostgreSQL'],
         category: 'web',
-        emoji: '👥',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
         demo: 'https://hrms.wu.ac.th/',
         repo: 'https://github.com/thasala-dev/wu-coop',
       },
@@ -115,7 +115,7 @@
         desc: 'Real-time stock management system that utilises QR code scanning for efficient inventory tracking. Supports multi-warehouse and live dashboard.',
         tags: ['TypeScript', 'Next.js', 'QR Code'],
         category: 'web',
-        emoji: '🔦',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h.01M18 14h.01M14 18h.01M18 18h.01M14 21h4M21 14v4"/></svg>',
         demo: 'https://stocklazer.vercel.app/',
         repo: 'https://github.com/kimookpong/stocklazer',
       },
@@ -125,7 +125,7 @@
         desc: 'A system for developing digital tools for agricultural personnel. Enables farmers to log crop data, receive line notifications, and manage farm operations online.',
         tags: ['Next.js', 'MongoDB', 'Line OA'],
         category: 'web',
-        emoji: '🌾',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
         private: true,
         demo: null,
         repo: null,
@@ -136,7 +136,7 @@
         desc: 'Point of Sale (POS) system designed for a large restaurant. Features table management, real-time order tracking, kitchen display, and end-of-day sales reports.',
         tags: ['React', 'Node.js', 'PostgreSQL'],
         category: 'web',
-        emoji: '🍽️',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h18"/><path d="M3 6l9 6 9-6"/><path d="M3 22V6"/><path d="M21 22V6"/><path d="M3 22h18"/></svg>',
         private: true,
         demo: null,
         repo: null,
@@ -147,7 +147,7 @@
         desc: 'A stock management system utilising QR code scanning for real-time verification and monitoring of inventory across multiple locations.',
         tags: ['Next.js', 'PostgreSQL', 'QR Code'],
         category: 'web',
-        emoji: '📦',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
         private: true,
         demo: null,
         repo: null,
@@ -158,7 +158,7 @@
         desc: 'A tourism platform showcasing attractions, accommodations, and local services in Udon City. Includes a map interface and attraction ratings.',
         tags: ['Next.js', 'MongoDB'],
         category: 'web',
-        emoji: '🗺️',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>',
         private: true,
         demo: null,
         repo: null,
@@ -169,7 +169,7 @@
         desc: 'A platform for managing government asset information and documentation — tracking procurement, depreciation, and physical location of assets.',
         tags: ['React', 'PostgreSQL'],
         category: 'web',
-        emoji: '🏛️',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
         private: true,
         demo: null,
         repo: null,
@@ -180,7 +180,7 @@
         desc: 'A multiplayer version of the classic AB guessing game where players try to guess a 4-digit number with unique digits. Built with real-time WebSocket sync.',
         tags: ['TypeScript', 'Socket.io'],
         category: 'hobby',
-        emoji: '🎮',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01M10 12h.01M14 10v4M17 10v4"/></svg>',
         demo: 'https://ab-game.vercel.app/',
         repo: 'https://github.com/kimookpong/ab-game-multi',
       },
@@ -190,7 +190,7 @@
         desc: 'A clean and minimal time tracking app. Built as a personal hobby project to explore modern frontend tooling with Vite.',
         tags: ['Vite'],
         category: 'hobby',
-        emoji: '⏱️',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
         demo: 'https://timere.vercel.app/',
         repo: 'https://github.com/kimookpong',
       },
@@ -200,7 +200,7 @@
         desc: 'A game top-up platform supporting multiple game titles. Features a clean storefront, item selection, and secure payment processing via Omise.',
         tags: ['Next.js', 'Omise'],
         category: 'hobby',
-        emoji: '🎓',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
         demo: 'https://levelup-plus.vercel.app/',
         repo: 'https://github.com/kimookpong/levelup',
       },
@@ -407,12 +407,12 @@
                alt="${p.title} screenshot"
                loading="lazy"
                onerror="this.parentElement.classList.add('proj-preview--error');this.style.display='none'">
-             <div class="proj-preview-emoji">${p.emoji || '💻'}</div>
+             <div class="proj-preview-icon">${p.icon || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div>
            </div>`
         : `<div class="project-thumb-fallback">
              ${p.private
                ? `<div class="proj-private-badge"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M5.25 10.5h13.5A1.75 1.75 0 0120.5 12.25v7A1.75 1.75 0 0118.75 21H5.25A1.75 1.75 0 013.5 19.25v-7A1.75 1.75 0 015.25 10.5z"/></svg><span>Private</span></div>`
-               : p.emoji || '💻'}
+               : `<div class="proj-preview-icon">${p.icon || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div>`}
            </div>`;
       return `
       <div class="project-card" data-id="${p.id}" data-category="${p.category}" role="button" tabindex="0">
@@ -493,7 +493,7 @@
       modalPreview.innerHTML = `<div class="modal-preview-fallback">
         ${p.private
           ? `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M5.25 10.5h13.5A1.75 1.75 0 0120.5 12.25v7A1.75 1.75 0 0118.75 21H5.25A1.75 1.75 0 013.5 19.25v-7A1.75 1.75 0 015.25 10.5z"/></svg><p>Private Repository</p>`
-          : `<span style="font-size:3rem">${p.emoji || '💻'}</span>`}
+          : `<div class="modal-preview-icon">${p.icon || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div>`}
       </div>`;
       modalPreview.style.display = '';
     }

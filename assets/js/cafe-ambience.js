@@ -2,6 +2,8 @@
    CAFE-AMBIENCE.JS
    Plays assets/sound/cafe.mp3 as looping background ambience.
    Fade in/out via Web Audio API GainNode for smooth transitions.
+   AudioContext is created ONLY inside start() — after a user gesture —
+   to comply with browser autoplay policy.
    Exposes: window.cafeAmbience = { toggle, isPlaying }
    ================================================================ */
 (function () {
@@ -14,26 +16,35 @@
   let running  = false;
   let fadeTick = null;
 
-  const FADE_STEPS   = 40;
-  const FADE_IN_MS   = 2500;
-  const FADE_OUT_MS  = 1500;
-  const TARGET_VOL   = 0.55;
+  const FADE_STEPS  = 40;
+  const FADE_IN_MS  = 2500;
+  const FADE_OUT_MS = 1500;
+  const TARGET_VOL  = 0.55;
 
-  /* ── Init audio element once ─────────────────────────────────── */
+  /* ── Init audio + AudioContext (call only after user gesture) ── */
   function initAudio() {
-    if (audio) return;
+    // Create HTMLAudioElement once (no AudioContext yet)
+    if (!audio) {
+      audio = new Audio('assets/sound/cafe.mp3');
+      audio.loop    = true;
+      audio.preload = 'auto';
+    }
 
-    audio = new Audio('assets/sound/cafe.mp3');
-    audio.loop    = true;
-    audio.preload = 'auto';
+    // Create AudioContext only when we're actually about to play
+    if (!ac) {
+      ac       = new (window.AudioContext || window.webkitAudioContext)();
+      source   = ac.createMediaElementSource(audio);
+      gainNode = ac.createGain();
+      gainNode.gain.value = 0;
+      source.connect(gainNode);
+      gainNode.connect(ac.destination);
+    }
 
-    ac       = new (window.AudioContext || window.webkitAudioContext)();
-    source   = ac.createMediaElementSource(audio);
-    gainNode = ac.createGain();
-    gainNode.gain.value = 0;
-
-    source.connect(gainNode);
-    gainNode.connect(ac.destination);
+    // If the context was suspended by the browser, resume it now
+    if (ac.state === 'suspended') {
+      return ac.resume();
+    }
+    return Promise.resolve();
   }
 
   /* ── Smooth fade helper ──────────────────────────────────────── */
@@ -48,8 +59,7 @@
 
     fadeTick = setInterval(() => {
       step++;
-      const t = step / FADE_STEPS;
-      // ease in-out cubic
+      const t    = step / FADE_STEPS;
       const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       gainNode.gain.value = startVol + diff * ease;
       if (step >= FADE_STEPS) {
@@ -65,11 +75,12 @@
     if (running) return;
     running = true;
 
-    initAudio();
-    if (ac.state === 'suspended') ac.resume();
-    audio.currentTime = 0;
-    audio.play().catch(() => {});
-    fadeTo(TARGET_VOL, FADE_IN_MS);
+    // initAudio() creates/resumes AudioContext inside this user-gesture call stack
+    initAudio().then(() => {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+      fadeTo(TARGET_VOL, FADE_IN_MS);
+    });
   }
 
   /* ── Stop ────────────────────────────────────────────────────── */
