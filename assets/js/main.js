@@ -286,7 +286,7 @@
         role: 'B.Eng. Computer Engineering',
         company: 'Prince of Songkla University (PSU)',
         type: 'Education',
-        desc: 'Bachelor of Engineering in Computer Engineering. Relevant project: Human Ear Recognition using C# and Machine Learning.',
+        desc: 'Bachelor of Engineering in Computer Engineering. Relevant project: Human Ear Recognition (Tags: C#, Machine Learning, Neural Networks, Image Processing).',
       },
     ],
   };
