@@ -15,7 +15,7 @@
       name: 'Hakim Mudor',
       bio: "Freelance Developer based in Nakhon Si Thammarat, Thailand 🇹🇭. I have experience as a System Analyst at Walailak University since 2020, and take on freelance projects nationwide. Born in Narathiwat (1989), B.Eng. Computer Engineering from Prince of Songkla University (2012). I live by one rule: Don't Repeat Yourself.",
       stats: [
-        { num: '5+',  label: 'Years at WU' },
+        { num: '5+', label: 'Years at WU' },
         { num: '10+', label: 'Projects Delivered' },
         { num: '2012', label: 'B.Eng. PSU' },
       ],
@@ -24,47 +24,47 @@
       {
         category: 'Frontend', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
         items: [
-          { name: 'Next.js',         level: 'advanced'     },
-          { name: 'TypeScript',      level: 'advanced'     },
-          { name: 'Tailwind CSS',    level: 'advanced'     },
-          { name: 'Bootstrap',       level: 'advanced'     },
-          { name: 'React Native',    level: 'advanced'     },
-          { name: 'Line OA / LIFF',  level: 'intermediate' },
+          { name: 'Next.js', level: 'advanced' },
+          { name: 'TypeScript', level: 'advanced' },
+          { name: 'Tailwind CSS', level: 'advanced' },
+          { name: 'Bootstrap', level: 'advanced' },
+          { name: 'React Native', level: 'advanced' },
+          { name: 'Line OA / LIFF', level: 'intermediate' },
         ],
       },
       {
         category: 'Backend', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
         items: [
-          { name: 'Node.js / Express', level: 'advanced'     },
-          { name: 'Yii2',              level: 'advanced'     },
-          { name: 'CodeIgniter',       level: 'advanced'     },
-          { name: 'PHP / Laravel',     level: 'intermediate' },
-          { name: 'Python',            level: 'intermediate' },
-          { name: 'Go',                level: 'basic'        },
-          { name: 'REST API',          level: 'advanced'     },
+          { name: 'Node.js / Express', level: 'advanced' },
+          { name: 'Yii2', level: 'advanced' },
+          { name: 'CodeIgniter', level: 'advanced' },
+          { name: 'PHP / Laravel', level: 'intermediate' },
+          { name: 'Python', level: 'intermediate' },
+          { name: 'Go', level: 'basic' },
+          { name: 'REST API', level: 'advanced' },
         ],
       },
       {
         category: 'Database', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>',
         items: [
-          { name: 'PostgreSQL', level: 'advanced'     },
-          { name: 'MongoDB',    level: 'advanced'     },
-          { name: 'MySQL',      level: 'advanced'     },
-          { name: 'Oracle',     level: 'intermediate' },
-          { name: 'Redis',      level: 'basic'        },
-          { name: 'Neon',       level: 'basic'        },
-          { name: 'Supabase',   level: 'basic'        },
+          { name: 'PostgreSQL', level: 'advanced' },
+          { name: 'MongoDB', level: 'advanced' },
+          { name: 'MySQL', level: 'advanced' },
+          { name: 'Oracle', level: 'intermediate' },
+          { name: 'Redis', level: 'basic' },
+          { name: 'Neon', level: 'basic' },
+          { name: 'Supabase', level: 'basic' },
         ],
       },
       {
         category: 'Infrastructure', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
         items: [
-          { name: 'Git / GitHub',     level: 'advanced'     },
-          { name: 'Docker',           level: 'intermediate' },
-          { name: 'Ubuntu Server',    level: 'intermediate' },
-          { name: 'Nginx',            level: 'basic'        },
-          { name: 'Apache',           level: 'basic'        },
-          { name: 'Vercel / Railway', level: 'advanced'     },
+          { name: 'Git / GitHub', level: 'advanced' },
+          { name: 'Docker', level: 'intermediate' },
+          { name: 'Ubuntu Server', level: 'intermediate' },
+          { name: 'Nginx', level: 'basic' },
+          { name: 'Apache', level: 'basic' },
+          { name: 'Vercel / Railway', level: 'advanced' },
         ],
       },
     ],
@@ -240,32 +240,53 @@
     ],
     experience: [
       {
-        date: '2020 – Present',
+        date: 'Nov 2020 – Present',
         role: 'System Analyst',
         company: 'Walailak University, Nakhon Si Thammarat',
         type: 'Full-time',
         desc: 'Design and develop internal web systems for the university — including HRMS, alumni portals, clerkship management platforms, and asset tracking tools. Primary stack: Next.js, React, PostgreSQL, Node.js.',
       },
       {
-        date: '2020 – Present',
-        role: 'Freelance Developer',
-        company: 'Self-employed, Thailand',
-        type: 'Freelance',
-        desc: 'Building full-stack web applications for clients across Thailand: POS systems, tourism platforms, farming tools, and government asset management. Specialise in Next.js, MongoDB, PostgreSQL, and Line OA integrations.',
+        date: 'Jun 2019 – Present',
+        role: 'Co-Founder',
+        company: 'Chailai Intertrade Co., Ltd, Songkhla',
+        type: 'Co-Founder',
+        desc: 'Co-founded a company handling business operations and technology solutions. Overseeing strategic planning and product development.',
       },
       {
-        date: '2012 – 2020',
-        role: 'Software / Web Developer',
-        company: 'Various Companies, Thailand',
+        date: '2017 – Present',
+        role: 'Freelance Developer',
+        company: 'Freelancer.com (Remote)',
+        type: 'Freelance',
+        desc: 'Building full-stack web applications for clients across Thailand and internationally: POS systems, tourism platforms, farming tools, and government asset management. Specialise in Next.js, MongoDB, PostgreSQL, and Line OA integrations.',
+      },
+      {
+        date: 'Dec 2016 – Nov 2020',
+        role: 'Co-Founder & Manufacturing Manager',
+        company: 'Ottoman Enterprise, Songkhla',
         type: 'Full-time',
-        desc: 'Over 8 years of hands-on experience building web applications ranging from PHP/Laravel backends to modern React frontends, working with SQL and NoSQL databases.',
+        desc: 'Managed manufacturing operations including production planning, quality control, and process optimisation. Led cross-functional teams to meet production targets.',
+      },
+      {
+        date: '2014 – 2016',
+        role: 'Lead Developer',
+        company: 'City Variety Corporation Co., Ltd, Songkhla',
+        type: 'Full-time',
+        desc: 'Led development team building web applications. Promoted from Web Developer to Lead Developer. Oversaw project delivery, code reviews, and technical architecture decisions.',
+      },
+      {
+        date: '2013 – 2014',
+        role: 'Developer',
+        company: 'City Variety Corporation Co., Ltd, Songkhla',
+        type: 'Full-time',
+        desc: 'Built and maintained web applications using PHP frameworks. Worked on client-facing websites and internal business tools.',
       },
       {
         date: '2008 – 2012',
         role: 'B.Eng. Computer Engineering',
         company: 'Prince of Songkla University (PSU)',
         type: 'Education',
-        desc: 'Bachelor degree in Computer Engineering. Graduated 2012. Foundation in algorithms, systems design, networking, and software engineering.',
+        desc: 'Bachelor of Engineering in Computer Engineering. Relevant project: Human Ear Recognition using C# and Machine Learning.',
       },
     ],
   };
@@ -330,8 +351,8 @@
   function updateParallax() {
     const sy = window.scrollY;
     parallaxEls.forEach(el => {
-      const speed  = parseFloat(el.dataset.parallax) || 0.2;
-      const rect   = el.parentElement.getBoundingClientRect();
+      const speed = parseFloat(el.dataset.parallax) || 0.2;
+      const rect = el.parentElement.getBoundingClientRect();
       const offset = (rect.top + sy) - window.innerHeight * 0.5;
       el.style.transform = `translateY(${offset * speed * -0.5}px)`;
     });
@@ -445,8 +466,8 @@
            </div>`
         : `<div class="project-thumb-fallback">
              ${p.private
-               ? `<div class="proj-private-badge"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M5.25 10.5h13.5A1.75 1.75 0 0120.5 12.25v7A1.75 1.75 0 0118.75 21H5.25A1.75 1.75 0 013.5 19.25v-7A1.75 1.75 0 015.25 10.5z"/></svg><span>Private</span></div>`
-               : `<div class="proj-preview-icon">${p.icon || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div>`}
+          ? `<div class="proj-private-badge"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M5.25 10.5h13.5A1.75 1.75 0 0120.5 12.25v7A1.75 1.75 0 0118.75 21H5.25A1.75 1.75 0 013.5 19.25v-7A1.75 1.75 0 015.25 10.5z"/></svg><span>Private</span></div>`
+          : `<div class="proj-preview-icon">${p.icon || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div>`}
            </div>`;
       return `
       <div class="project-card" data-id="${p.id}" data-category="${p.category}" data-parallax-tilt="7" data-parallax-glare="true" role="button" tabindex="0">
@@ -484,7 +505,7 @@
     tl.innerHTML = exp.map(e => `
       <div class="timeline-item">
         <div class="timeline-date">${e.date}</div>
-        <div class="timeline-role">${e.role}</div>(Multi)
+        <div class="timeline-role">${e.role}</div>
         <div class="timeline-company">
           ${e.company}
           <span class="badge">${e.type}</span>
@@ -505,7 +526,7 @@
     if (!p) return;
 
     document.getElementById('modalTitle').textContent = p.title;
-    document.getElementById('modalDesc').textContent  = p.desc;
+    document.getElementById('modalDesc').textContent = p.desc;
 
     const tagsEl = document.getElementById('modalTags');
     tagsEl.innerHTML = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
@@ -584,7 +605,7 @@
   };
 
   function loadGitHubData() {
-    const GH   = 'https://api.github.com';
+    const GH = 'https://api.github.com';
     const USER = 'kimookpong';
     const CACHE_KEY = 'gh_cache_v1';
     const CACHE_TTL = 60 * 60 * 1000; // 1 hour
@@ -608,12 +629,12 @@
     }
 
     function saveToCache(data) {
-      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch {}
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch { }
     }
 
     function applyGitHubData({ user, repos }) {
       const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-      set('ghRepos',     user.public_repos);
+      set('ghRepos', user.public_repos);
       set('ghFollowers', user.followers);
       set('ghFollowing', user.following);
 
@@ -690,11 +711,11 @@
     if (!grid) return;
     grid.innerHTML = repos.map(r => {
       const lang = r.language || '';
-      const dot  = LANG_COLOR[lang]
+      const dot = LANG_COLOR[lang]
         ? `<span class="repo-lang-dot" style="background:${LANG_COLOR[lang]}"></span>`
         : '';
       const desc = r.description ? `<p class="repo-desc">${r.description}</p>` : '';
-      const updated = new Date(r.updated_at).toLocaleDateString('en-GB', { year:'numeric', month:'short' });
+      const updated = new Date(r.updated_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'short' });
       return `
         <a class="repo-card reveal" href="${r.html_url}" target="_blank" rel="noopener">
           <div class="repo-top">
@@ -738,7 +759,7 @@
     if (!cafeBtn) return;
     cafeBtn.classList.toggle('cafe-on', on);
     cafeBtn.querySelector('.cafe-icon-off').style.display = on ? 'none' : '';
-    cafeBtn.querySelector('.cafe-icon-on').style.display  = on ? ''     : 'none';
+    cafeBtn.querySelector('.cafe-icon-on').style.display = on ? '' : 'none';
   }
 
   if (cafeBtn) {
