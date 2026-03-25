@@ -263,7 +263,7 @@
       {
         date: 'Dec 2016 – Nov 2020',
         role: 'Co-Founder & Manufacturing Manager',
-        company: 'Ottoman Enterprise, Songkhla',
+        company: 'Ottoman Enterprise Co., Ltd, Songkhla',
         type: 'Full-time',
         desc: 'Managed manufacturing operations including production planning, quality control, and process optimisation. Led cross-functional teams to meet production targets.',
       },
@@ -284,7 +284,7 @@
       {
         date: '2008 – 2012',
         role: 'B.Eng. Computer Engineering',
-        company: 'Prince of Songkla University (PSU)',
+        company: 'Prince of Songkla University (PSU), Songkhla',
         type: 'Education',
         desc: 'Bachelor of Engineering in Computer Engineering. Relevant project: Human Ear Recognition (Tags: C#, Machine Learning, Neural Networks, Image Processing).',
       },
