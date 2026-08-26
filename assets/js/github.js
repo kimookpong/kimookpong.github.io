@@ -99,7 +99,7 @@
     button.addEventListener('click', () => setTimeout(renderExtras));
   });
   const requestedLang = new URLSearchParams(location.search).get('lang');
-  if (requestedLang === 'en') document.querySelector('[data-lang="en"]').click();
+  if (requestedLang === 'en' || requestedLang === 'th') document.querySelector(`[data-lang="${requestedLang}"]`).click();
   renderExtras();
   loadRepos();
 })();
