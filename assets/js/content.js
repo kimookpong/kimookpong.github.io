@@ -39,8 +39,8 @@
   const projectGrid = document.querySelector('#projects');
   projectGrid.innerHTML = projects.map((p, i) => {
     const preview = p[5]
-      ? `<div class="project-preview"><img src="https://image.thum.io/get/width/1200/crop/760/noanimate/${p[5]}" alt="Preview of ${p[1]}" loading="lazy" width="1200" height="760"><span class="preview-fallback" aria-hidden="true">${p[0]}</span></div>`
-      : `<div class="project-preview project-preview-private"><span aria-hidden="true">${p[0]}</span><small>Private project</small></div>`;
+      ? `<div class="project-preview"><img src="https://image.thum.io/get/width/1200/crop/760/noanimate/${p[5]}" alt="Preview of ${p[1]}" loading="lazy" width="1200" height="760"><span class="preview-fallback" aria-hidden="true">${ICON(p[0],1)}</span></div>`
+      : `<div class="project-preview project-preview-private"><span aria-hidden="true">${ICON(p[0],1)}</span><small>Private project</small></div>`;
     return `<article class="project legacy-project" data-category="${p[4]}">${preview}<div class="project-content"><span class="num">${String(i + 1).padStart(2,'0')}</span><h3>${p[1]}</h3><p>${p[2]}</p><div class="tags">${p[3].map(tag => `<span>${tag}</span>`).join('')}</div>${p[5] ? `<a href="${p[5]}" target="_blank" rel="noopener" aria-label="${p[1]}"></a>` : '<span class="private-label">Private project</span>'}</div></article>`;
   }).join('');
   projectGrid.querySelectorAll('.project-preview img').forEach(image => {
