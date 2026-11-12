@@ -44,7 +44,7 @@ void main(){
   vec3 col = vec3(0.);
   for (float x = -2.; x <= 2.; x++)
     for (float y = -2.; y <= 2.; y++)
-      col += bgAt(base + vec2(x, y) * 3.5);
+      col += bgAt(base + vec2(x, y) * 1.5);   // blur spread (px): higher = frostier
   col /= 25.;
 
   // smoked glass so white text stays readable
