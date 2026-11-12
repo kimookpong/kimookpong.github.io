@@ -1,8 +1,9 @@
 /* =========================================================
    Liquid glass for the floating cards (WebGL).
-   Adapted from the "Liquid Glass Shader" technique: a superellipse
-   (x⁶ + y⁶) lens mask → edge refraction → blurred sampling of the
-   scene behind → rim light + top-down light gradient.
+   Adapted from the "Liquid Glass Shader" technique (lens refraction →
+   frosted sampling of the scene behind → rim light + top light), but
+   shaped by the card's real rounded rectangle so only a thin bevel at
+   the edge refracts — no inner "second card" outline.
    Each card owns a small canvas that renders the slice of the office
    background behind it, so the glass tilts/bobs with the card.
    ========================================================= */
@@ -10,49 +11,52 @@ window.LiquidGlass = (() => {
   const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   const FS = `
 precision mediump float;
-uniform vec2  uSize;   // canvas size (px)
-uniform vec4  uRect;   // card rect on screen (x, y, w, h) in CSS px
-uniform vec4  uBg;     // background image draw rect on screen (x, y, w, h)
+uniform vec2  uSize;   // canvas size (device px)
+uniform vec2  uBox;    // card face size (CSS px, untransformed)
+uniform float uRadius; // inner corner radius (CSS px) — matches the card's border-radius
+uniform vec4  uRect;   // card's on-screen bounding rect (CSS px) — where to sample the scene
+uniform vec4  uBg;     // background photo draw rect on screen (CSS px)
 uniform vec3  uTint;   // card colour
-uniform vec2  uLight;  // pointer position inside the card (0..1), for the moving glint
+uniform vec2  uLight;  // pointer position inside the card (0..1)
 uniform sampler2D uTex;
 
-vec3 bgAt(vec2 screen){                       // sample the office photo at a screen point
+vec3 bgAt(vec2 screen){
   vec2 t = (screen - uBg.xy) / uBg.zw;
-  return texture2D(uTex, clamp(t, 0.001, .999)).rgb;
+  return texture2D(uTex, clamp(t, .001, .999)).rgb;
 }
 void main(){
-  vec2 uv = gl_FragCoord.xy / uSize; uv.y = 1. - uv.y;        // 0..1, y down
-  vec2 m  = uv - .5;                                          // centred
-  // superellipse "rounded box": 0 at centre → 1 at the card edge
-  float r  = pow(abs(m.x * 2.), 6.) + pow(abs(m.y * 2.), 6.);
-  float rb1 = clamp((1. - r) * 8., 0., 1.);                                              // glass body
-  float rb2 = clamp((.95 - r * .95) * 16., 0., 1.) - clamp((.9 - r * .95) * 16., 0., 1.); // rim ring
-  float rb3 = clamp((1.5 - r * 1.1) * 2., 0., 1.) - clamp((1. - r * 1.1) * 2., 0., 1.);   // outer falloff
+  vec2 uv = gl_FragCoord.xy / uSize; uv.y = 1. - uv.y;   // 0..1, y down
+  vec2 p  = (uv - .5) * uBox;                            // CSS px from centre
+  vec2 hb = uBox * .5;
+  // signed distance to the card's real rounded rectangle (negative inside)
+  vec2 q  = abs(p) - hb + uRadius;
+  float d = length(max(q, 0.)) + min(max(q.x, q.y), 0.) - uRadius;
+  float e = -d;                                          // distance from the edge, inward
 
-  // lens: magnify toward the edges like a thick glass bevel
-  vec2 lens = m * (1. - r * .45) + .5;
-  vec2 base = uRect.xy + lens * uRect.zw;
+  // bevel: only the outer ~16px bends light, like the thick edge of a glass slab
+  float bevel = 16.;
+  float t = clamp(e / bevel, 0., 1.);
+  vec2 n = q.x > q.y ? vec2(sign(p.x), 0.) : vec2(0., sign(p.y));
+  if (q.x > 0. && q.y > 0.) n = normalize(q) * sign(p);
+  vec2 refr = -n * pow(1. - t, 2.) * 14.;                // pull the scene inward near the rim
 
-  // frosted blur (5×5 taps, ~7px spread)
+  vec2 base = uRect.xy + uv * uRect.zw + refr;
   vec3 col = vec3(0.);
   for (float x = -2.; x <= 2.; x++)
     for (float y = -2.; y <= 2.; y++)
       col += bgAt(base + vec2(x, y) * 3.5);
   col /= 25.;
 
-  // light: brighter toward the top edge, plus the rim ring
-  float grad = clamp((clamp(-m.y, 0., .2) + .1) / 2., 0., 1.)
-             + clamp((clamp(m.y, -1000., .2) * rb3 + .1) / 2., 0., 1.);
-  vec3 lit = clamp(col + vec3(rb1) * grad * .55 + vec3(rb2) * .35, 0., 1.);
-
-  // darken + tint so white text stays readable, colour bleeds in at the edges
-  vec3 deep = vec3(.05, .07, .14);
-  vec3 outc = mix(lit, deep, .52);
-  outc += uTint * (rb3 * .55 + rb2 * .35 + .06);
-  // soft specular glint following the pointer
-  float g = smoothstep(.55, 0., distance(uv, uLight));
-  outc += vec3(.16) * g * (1. - uv.y);
+  // smoked glass so white text stays readable
+  vec3 outc = mix(col, vec3(.05, .07, .14), .5);
+  // colour of the card glows softly in the bevel only
+  outc += uTint * (.05 + .22 * pow(1. - t, 1.5));
+  // thin specular rim, strongest along the top edge
+  float rim = smoothstep(2.5, 0., e);
+  outc += vec3(.45) * rim * (1. - uv.y * .8);
+  // soft top-down sheen + glint following the pointer
+  outc += vec3(.07) * (1. - smoothstep(0., .45, uv.y));
+  outc += vec3(.12) * smoothstep(.5, 0., distance(uv, uLight)) * (1. - uv.y);
   gl_FragColor = vec4(clamp(outc, 0., 1.), 1.);
 }`;
 
@@ -79,7 +83,7 @@ void main(){
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     const U = n => gl.getUniformLocation(pr, n);
-    item.gl = gl; item.u = { size:U('uSize'), rect:U('uRect'), bg:U('uBg'), tint:U('uTint'), light:U('uLight') };
+    item.gl = gl; item.u = { size:U('uSize'), box:U('uBox'), radius:U('uRadius'), rect:U('uRect'), bg:U('uBg'), tint:U('uTint'), light:U('uLight') };
     gl.uniform3fv(item.u.tint, hex(item.color));
   }
 
@@ -125,10 +129,15 @@ void main(){
       for (const it of items) {
         if (!it.gl) continue;
         const c = it.canvas, w = Math.max(1, Math.round(c.clientWidth * dpr)), h = Math.max(1, Math.round(c.clientHeight * dpr));
-        if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
-        const r = c.getBoundingClientRect(), gl = it.gl;
+        const gl = it.gl;
+        if (c.width !== w || c.height !== h) {
+          c.width = w; c.height = h;
+          gl.uniform1f(it.u.radius, parseFloat(getComputedStyle(c).borderTopLeftRadius) || 0);
+        }
+        const r = c.getBoundingClientRect();
         gl.viewport(0, 0, w, h);
         gl.uniform2f(it.u.size, w, h);
+        gl.uniform2f(it.u.box, c.clientWidth, c.clientHeight);
         gl.uniform4f(it.u.rect, r.left, r.top, r.width, r.height);
         gl.uniform4f(it.u.bg, B[0], B[1], B[2], B[3]);
         gl.uniform2f(it.u.light, it.light[0], it.light[1]);
