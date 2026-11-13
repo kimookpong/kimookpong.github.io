@@ -16,6 +16,7 @@ const IC = {
   server: stroke('<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>'),
   db: stroke('<ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>'),
   cloud: stroke('<path d="M7 18a4.5 4.5 0 01-.6-8.96A6 6 0 0118 8.5a4.5 4.5 0 01-.5 9.5z"/>'),
+  star: stroke('<path d="M12 3l2.7 5.6 6.1.8-4.4 4.3 1.1 6.1L12 17l-5.5 2.8 1.1-6.1-4.4-4.3 6.1-.8z"/>'),
   close: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
 };
 const GROUP_IC = { Frontend:['monitor','#2563eb'], Backend:['server','#7c3aed'], Database:['db','#0f8a6a'], Infrastructure:['cloud','#c2410c'] };
@@ -31,9 +32,6 @@ const CARDS = [
   /* slot: "Photoshop" (upper-left) */
   { id:'about', nav:'navAbout', icon:'avatar', ib:'#0b2340', color:'#3d9dff', pw:620,
     l:100, t:190, X:-390, T:150, w:168, h:226, rt:'rotateY(16deg) rotateZ(-2deg)', depth:1.2, bob:'6.5s', delay:'0s' },
-  /* slot: "Adobe Express" (top-centre, gradient border) */
-  { id:'work', nav:'navWork', icon:'grid', ib:'#0b0b10', ic:'#c9b8ff', color:'#9f8cff', grad:true, pw:900,
-    l:312, t:90, X:-105, T:18, w:178, h:218, rt:'rotateX(6deg)', depth:1.6, bob:'7s', delay:'-2s' },
   /* slot: "AI Models" (upper-right, list) */
   { id:'stack', nav:'navStack', icon:'layers', ib:'#121a3a', color:'#4fb3ff', pw:760,
     l:520, t:172, X:200, T:140, w:186, h:248, rt:'rotateY(-14deg) rotateZ(1deg)', depth:1.4, bob:'6s', delay:'-1s' },
@@ -44,11 +42,20 @@ const CARDS = [
   { id:'github', nav:'navGithub', icon:'github', ib:'#ffffff', ic:'#0d1117', color:'#8c7dff', pw:780,
     l:523, t:466, X:230, T:480, w:170, h:252, rt:'rotateY(-16deg) rotateZ(2deg)', depth:1.5, bob:'7.4s', delay:'-4s' }
 ];
+/* one card per featured project (data.js → featured). They share the orbit with
+   the section cards; l/t and X/T are only used when motion is reduced and the orbit is off. */
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+D.featured.forEach((f, i) => CARDS.push({ id:'p-' + slug(f.title), f, ring:1, color:f.color, ib:'#0b0e1a', pw:720,
+  l:40 + (i % 4) * 172, t:770, X:[-600, -420, 250, 430][i % 4], T:650, w:150, h:196,
+  rt:'rotateX(4deg)', depth:1.9, bob:`${(6 + i * .55).toFixed(2)}s`, delay:`${(-i * 1.3).toFixed(1)}s` }));
 const BY_ID = Object.fromEntries(CARDS.map(c => [c.id, c]));
+const kindOf = f => f.kind[lang] || f.kind.en;
 
 let lang = 'en';
 const t = k => D.T[lang][k] ?? D.T.en[k] ?? k;
-const icon = (c, extra='') => c.icon === 'avatar'
+const icon = (c, extra='') => c.f
+  ? `<span class="ico ava shotico" style="--ib:${c.ib}" ${extra}><img src="${c.f.img}" alt="" width="64" height="64"></span>`
+  : c.icon === 'avatar'
   ? `<span class="ico ava" style="--ib:${c.ib}" ${extra}><img src="assets/img/hakim-avatar.webp" alt="" width="64" height="64"></span>`
   : `<span class="ico" style="--ib:${c.ib};--ic:${c.ic||'#fff'}" ${extra}>${IC[c.icon]}</span>`;
 
@@ -61,11 +68,12 @@ const SOCIAL = {
 };
 function cardBody(c){
   const P = D.projects;
+  if (c.f) return `<span class="panelette shot"><img src="${c.f.img}" alt="" loading="lazy" decoding="async"></span>
+      <h3>${esc(c.f.title)}</h3><span class="meta">${esc(kindOf(c.f))}</span>`;
   switch(c.id){
     case 'about': return `${icon(c)}<h3>${t('navAbout')}</h3>
       <span class="panelette pv"><span class="pv-stats"><b>${D.stats.years}+<small>${lang==='th'?'ปี':'yrs'}</small></b><b>${D.stats.shipped}+<small>${lang==='th'?'งาน':'projects'}</small></b></span>
       <span class="pv-hello"><i class="dot"></i>${t('navContact')}<span class="soc">${SOCIAL.fb}${SOCIAL.in}</span></span></span>`;
-    case 'work': return `${icon(c)}<h3>${t('navWork')}</h3><p>${t('workIntro')} <b>${P.length} ${t('projectsCount')}</b></p>`;
     case 'stack': return `<h3>${t('navStack')}</h3><ul class="models">${D.stack.map(g=>{const [i,b]=GROUP_IC[g[0]];return `<li><i style="--b:${b}">${IC[i]}</i>${g[0]}</li>`}).join('')}</ul>`;
     case 'journey': return `${icon(c)}<h3>${t('navJourney')}</h3><span class="panelette ill"><svg class="mini-tl" viewBox="0 0 140 30" aria-hidden="true"><path d="M5 26 C 30 2, 90 -2, 135 14" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="5" cy="26" r="3.4" fill="#ffb648"/><rect x="66" y="3" width="6" height="6" fill="#fff"/><circle cx="135" cy="14" r="3.4" fill="#ffb648"/></svg><span class="ill-tiles"><span class="tile-sq"><b>2008</b><small>B.Eng.</small></span><span class="tile-sq"><b>Now</b><small>SA</small></span></span></span>`;
     case 'github': return `${icon(c)}<h3>GitHub</h3><span class="screen"><span class="scr-bar"><i></i><i></i><i></i><em>@${D.githubUser}</em></span><img class="heat" src="assets/img/github-chart.svg" alt="" width="663" height="104"><span class="scr-stats"><span><b>${gh.all.length||'—'}</b>repos</span><span><b>${gh.all.length?gh.stars:'—'}</b>stars</span></span><span class="scr-rows"><i style="width:82%"></i><i style="width:64%"></i><i style="width:46%"></i></span></span>`;
@@ -80,6 +88,13 @@ const level = l => `<span class="lvl">${l}<i>${[1,2,3].map(n=>`<u class="${n<=LE
 
 function renderPanel(c){
   const L = D.links;
+  if (c.f) { const f = c.f;   // a featured project's own panel
+    return `${head(c, kindOf(f), esc(f.title))}
+      <a class="fshot" href="${f.url}" target="_blank" rel="noopener" aria-label="${esc(f.title)} — ${t('tryLive')}"><img src="${f.img}" alt="" decoding="async"></a>
+      <p class="p-desc">${esc(f[lang] || f.en)}</p>
+      <div class="sec"><h4>Stack</h4><div class="tags">${f.tags.map(x => `<span>${esc(x)}</span>`).join('')}</div></div>
+      <div class="btns"><a class="btn primary" href="${f.url}" target="_blank" rel="noopener">${t('tryLive')} ↗</a>${f.repo ? `<a class="btn" href="${f.repo}" target="_blank" rel="noopener">${t('source')} ↗</a>` : ''}</div>`;
+  }
   switch(c.id){
     case 'about': return `${head(c, t('aboutKicker'), t('aboutTitle'))}
       <p class="p-desc">${t('heroLead')}</p>
@@ -88,14 +103,6 @@ function renderPanel(c){
       <div class="sec"><h4>Skills</h4><div class="tags">${D.quickSkills.map(s=>`<span>${esc(s)}</span>`).join('')}</div></div>
       <div class="sec contact-sec"><h4>${t('contactKicker')}</h4><h3>${t('contactTitle')}</h3><p class="p-desc">${t('contactText')}</p>
       <div class="btns"><a class="btn primary" href="${L.facebook}" target="_blank" rel="noopener">${t('message')} ↗</a><a class="btn" href="${L.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn" href="${L.github}" target="_blank" rel="noopener">GitHub ↗</a></div></div>`;
-    case 'work': {
-      const cats = ['all', ...new Set(D.projects.map(p=>p[4]))];
-      return `${head(c, t('workKicker'), t('workTitle'))}
-      <p class="p-desc">${t('workIntro')}</p>
-      <div class="filters" role="group" aria-label="Filter">${cats.map((k,i)=>`<button data-cat="${k}" class="${i?'':'on'}" aria-pressed="${!i}">${k}</button>`).join('')}</div>
-      <div class="plist">${D.projects.map(p=>`<article class="proj" data-cat="${p[4]}"><div class="top"><b aria-hidden="true">${p[0]}</b><h5>${esc(p[1])}</h5></div><p>${esc(p[2])}</p><div class="tags">${p[3].map(x=>`<span>${esc(x)}</span>`).join('')}</div>${p[5]?`<span class="go">${t('visit')} ↗</span><a href="${p[5]}" target="_blank" rel="noopener" aria-label="${esc(p[1])}"></a>`:`<span class="go off">🔒 ${t('private')}</span>`}</article>`).join('')}</div>
-      <div class="btns"><a class="btn primary" href="${L.repos}" target="_blank" rel="noopener">${t('allProjects')} ↗</a></div>`;
-    }
     case 'stack': return `${head(c, 'Skills', t('navStack'))}
       <p class="p-desc">${t('stackIntro')}</p>
       <div class="sgrid">${D.stack.map(g=>`<section class="sgroup"><h5>${g[0]}</h5>${g[1].map(s=>`<div class="srow"><span>${esc(s[0])}</span>${level(s[1])}</div>`).join('')}</section>`).join('')}</div>`;
@@ -118,8 +125,9 @@ function renderPanel(c){
 const cardsEl = $('cards');
 CARDS.forEach((c, i) => {
   const el = document.createElement('div');
-  el.className = `card ${c.id}`;
+  el.className = `card ${c.f ? 'proj-card' : c.id}`;
   el.dataset.id = c.id;
+  el.ring = c.ring || 0;
   el.style.cssText = `--l:${c.l};--t:${c.t};--X:${c.X};--T:${c.T};--w:${c.w};--h:${c.h};--rt:${c.rt};--c:${c.color};--bob:${c.bob};--delay:${c.delay}`;
   el.innerHTML = `<div class="card-tilt"><button class="card-face${c.grad?' grad':''}" aria-haspopup="dialog"><span class="face-body"></span></button></div>`;
   el.face = el.querySelector('.card-face');
@@ -133,7 +141,7 @@ function renderCards(){
   cardEls.forEach(el => {
     const c = BY_ID[el.dataset.id];
     el.body.innerHTML = `<span class="key" aria-hidden="true">${el.keyNo}</span>${cardBody(c)}`;
-    el.face.setAttribute('aria-label', `${t('open')}: ${t(c.nav)}`);
+    el.face.setAttribute('aria-label', `${t('open')}: ${c.f ? c.f.title : t(c.nav)}`);
   });
 }
 
@@ -163,6 +171,61 @@ addEventListener('pointermove', e => {
   px=e.clientX; py=e.clientY; lastMove=performance.now();
 }, { passive:true });
 
+/* ---------- 2.5D orbit: cards circle the person on a tilted ellipse ----------
+   sin(angle) > 0 → the card is on the near side: drawn over the person, full size, sharp.
+   sin(angle) < 0 → far side: behind the person, smaller, dimmer and slightly blurred.
+   The near/far swap happens at the ellipse's left/right ends, beside the person,
+   so a card never pops through the body. */
+const orbitOn = !reduce;
+/* one ring for every card. Project cards are interleaved between the section
+   cards (about, project, work, project, …) so neither group bunches up. */
+const RINGS = [{ period:60000, dir:1, ang:-Math.PI / 2, rx:1, ry:1, dy:0, scale:1 }];
+{
+  const sec = cardEls.filter(el => !el.ring), prj = cardEls.filter(el => el.ring), order = [];
+  for (let i = 0; i < Math.max(sec.length, prj.length); i++) { if (sec[i]) order.push(sec[i]); if (prj[i]) order.push(prj[i]); }
+  RINGS[0].cards = order;
+}
+let orbitSpeed = 1, orbitPrev = 0, hoverCount = 0, geo = null;
+if (orbitOn) cardsEl.classList.add('orbit');
+function measureOrbit(){
+  const W = tilt.clientWidth, H = tilt.clientHeight, wide = W / H >= 1.25;
+  const cw = Math.max(...cardEls.map(el => el.offsetWidth)), ch = Math.max(...cardEls.map(el => el.offsetHeight));
+  // orbit centre: the person's head column, about a quarter of the way down the figure
+  const ox = person.offsetLeft + person.offsetWidth * .57, oy = person.offsetTop + person.offsetHeight * .25;
+  const room = Math.min(ox, W - ox) - cw * .5 - (wide ? 24 : 6);
+  geo = { ox, oy, H, rx: Math.max(40, Math.min(room, wide ? H * .58 : W)), ry: H * (wide ? .12 : .16) };
+  cardEls.forEach(el => { el.cw = el.offsetWidth; el.ch = el.offsetHeight; });
+}
+addEventListener('resize', () => { geo = null; });
+cardEls.forEach(el => {
+  el.addEventListener('pointerenter', () => hoverCount++);
+  el.addEventListener('pointerleave', () => { hoverCount = Math.max(0, hoverCount - 1); });
+});
+function orbit(now, s){
+  if (!geo) measureOrbit();
+  const dt = Math.min(now - (orbitPrev || now), 64); orbitPrev = now;
+  const target = openId ? 0 : hoverCount ? .08 : 1;     // slow right down under the pointer, freeze while a panel is open
+  orbitSpeed = openId ? 0 : orbitSpeed + (target - orbitSpeed) * .06;
+  RINGS.forEach(R => {
+    R.ang += R.dir * dt / R.period * Math.PI * 2 * orbitSpeed;
+    const ry = geo.ry * R.ry * (1 - cy * .35);          // mouse tips the orbit plane toward / away from you
+    R.cards.forEach((el, i) => {
+    const a = R.ang + i * Math.PI * 2 / R.cards.length;
+    const sn = Math.sin(a), cs = Math.cos(a), near = (sn + 1) / 2;
+    const sc = R.scale * (.74 + .26 * near);
+    const x = geo.ox + cs * geo.rx * R.rx - el.cw / 2 + cx * 4 * s * (1 + near);
+    const y = geo.oy + geo.H * R.dy + sn * ry - el.ch / 2 + cy * 3 * s * (1 + near);
+    el.style.transform = `translate3d(${x}px,${y}px,0) scale(${sc})`;
+    // depth order: far side 2–6 (in front of the projector at z 1, behind the person at z 10), near side 15–19
+    el.style.zIndex = sn > 0 ? 11 + Math.round(near * 8) : 2 + Math.round(near * 8);
+    el.face.lgFront = sn > 0;          // liquid glass then shows the person through this card
+    el.style.opacity = (.62 + .38 * near).toFixed(3);
+    el.style.filter = near < .45 ? `blur(${((.45 - near) * 3.2).toFixed(2)}px)` : '';
+    el.style.setProperty('--rt', `rotateY(${(-cs * 24).toFixed(2)}deg) rotateZ(${(cs * -2).toFixed(2)}deg)`);
+    });
+  });
+}
+
 function frame(now){
   if (now-lastMove > 2500) { tx=Math.sin(now/3200)*.3; ty=Math.cos(now/4200)*.2; }  // idle drift (touch / no mouse)
   const k = reduce ? 1 : .045, m = reduce ? 0 : 1;
@@ -170,18 +233,20 @@ function frame(now){
   const s = scene.offsetHeight/1104;
   tilt.style.transform = `rotateY(${cx*1.2*m}deg) rotateX(${-cy*.8*m}deg)`;
   bg.style.transform = `translate3d(${-cx*5*s*m}px,${-cy*3*s*m}px,0)`;
+  const pj = document.getElementById('projector');   // projector screen hangs on the back wall
+  if (pj) pj.style.transform = bg.style.transform;
   sBack.style.transform = `translate3d(${-cx*3*s*m}px,${-cy*2*s*m}px,0)`;
   person.style.transform = `translate3d(${cx*10*s*m}px,${cy*5*s*m}px,0)`;
-  person.style.filter = `drop-shadow(${-cx*3*s}px ${-cy*2*s}px ${14*s}px rgba(90,175,255,.45))`;
   sFront.style.transform = `translate3d(${cx*7*s*m}px,${cy*4*s*m}px,0)`;
   headline.style.transform = `translate3d(${cx*5*s*m}px,${cy*3*s*m}px,0)`;
   ambient.style.transform = `scale(1.15) translate3d(${-cx*8*m}px,${-cy*5*m}px,0)`;
-  cardEls.forEach(el => { const d = BY_ID[el.dataset.id].depth;
+  if (orbitOn) orbit(now, s);
+  else cardEls.forEach(el => { const d = BY_ID[el.dataset.id].depth;
     el.style.transform = `translate3d(${cx*4*d*s*m}px,${cy*3*d*s*m}px,0)`; });
   const r = scene.getBoundingClientRect();
   spot.style.setProperty('--sx', ((px-r.left)/r.width*100)+'%');
   spot.style.setProperty('--sy', ((py-r.top)/r.height*100)+'%');
-  if (!openId && window.LiquidGlass) LiquidGlass.render(bg);   // liquid glass follows the parallax
+  if (!openId && window.LiquidGlass) LiquidGlass.render(bg, person);   // liquid glass follows the parallax
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -252,7 +317,7 @@ function closePanel(){
 overlay.addEventListener('click', e => { if (e.target.closest('[data-close]')) closePanel(); });
 addEventListener('keydown', e => {
   if (e.key === 'Escape') return closePanel();
-  if (/^[1-5]$/.test(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey) openPanel(CARDS[+e.key-1].id);
+  if (/^[1-9]$/.test(e.key) && CARDS[+e.key-1] && !e.metaKey && !e.ctrlKey && !e.altKey) openPanel(CARDS[+e.key-1].id);
   if (e.key === 'Tab' && openId) {   // keep focus inside the dialog
     const f = [...panel.querySelectorAll('button,a[href]')].filter(x => x.offsetParent);
     if (!f.length) return;
@@ -294,7 +359,7 @@ async function loadGithub(){
 }
 
 /* ---------- init ---------- */
-if (window.LiquidGlass) LiquidGlass.init(bg.currentSrc || bg.src).then(on => document.documentElement.classList.toggle('lg', on));
+if (window.LiquidGlass) LiquidGlass.init(bg.currentSrc || bg.src, person.currentSrc || person.src).then(on => document.documentElement.classList.toggle('lg', on));
 let initial = 'en';
 try { initial = localStorage.getItem('portfolio-lang') || 'en'; } catch {}
 const q = new URLSearchParams(location.search).get('lang');

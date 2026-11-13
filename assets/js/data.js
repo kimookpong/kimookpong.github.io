@@ -13,8 +13,8 @@ window.PORTFOLIO = {
       role: 'Full‑Stack Developer & System Analyst',
       available: 'พร้อมรับงาน freelance และ collaboration',
       heroLead: 'นักพัฒนา Full‑Stack และ System Analyst ที่ชอบเปลี่ยนเรื่องซับซ้อน ให้เป็นระบบที่เรียบง่าย เป็นมิตร และใช้ได้จริง',
-      hint: 'แตะการ์ดเพื่อดูรายละเอียด',
       navAbout: 'รู้จักกัน', navWork: 'ผลงาน', navStack: 'Tech Stack', navGithub: 'GitHub', navJourney: 'เส้นทาง', navContact: 'ทักทาย',
+      tryLive: 'ลองเล่น', source: 'ดูโค้ด',
       aboutKicker: 'เรื่องของผม',
       aboutTitle: 'ผมสร้างของที่<mark>คนใช้แล้วไม่ต้องคิดเยอะ</mark>',
       aboutP1: 'ผมทำงานตั้งแต่การคุยกับผู้ใช้ วิเคราะห์ระบบ ออกแบบฐานข้อมูล ไปจนถึงเขียนโค้ดและนำขึ้นใช้งานจริง ประสบการณ์จากทั้งมหาวิทยาลัย ธุรกิจ และงาน freelance ทำให้ผมมองเห็นภาพใหญ่โดยไม่ทิ้งรายละเอียดเล็กๆ',
@@ -45,8 +45,8 @@ window.PORTFOLIO = {
       role: 'Full‑Stack Developer & System Analyst',
       available: 'Available for freelance & collaboration',
       heroLead: 'A Full‑Stack Developer and System Analyst who turns complex problems into simple, friendly systems that work in the real world.',
-      hint: 'Tap a card to explore',
       navAbout: 'About', navWork: 'Work', navStack: 'Tech Stack', navGithub: 'GitHub', navJourney: 'Journey', navContact: 'Say hello',
+      tryLive: 'Try it', source: 'Source',
       aboutKicker: 'A bit about me',
       aboutTitle: 'I build things <mark>people can use with ease</mark>',
       aboutP1: 'I work from user conversations and system analysis through database design, coding, and production launch. Experience across universities, businesses, and freelance projects helps me hold the big picture without losing the small details.',
@@ -72,7 +72,7 @@ window.PORTFOLIO = {
     }
   },
 
-  stats: { years: 5, shipped: 10 },
+  stats: { years: 5, shipped: 50 },
 
   quickSkills: ['Next.js', 'TypeScript', 'React', 'Node.js', 'PostgreSQL', 'MongoDB', 'React Native', 'Docker', 'System Analysis', 'REST API', 'Git / GitHub', 'Line OA'],
 
@@ -102,6 +102,31 @@ window.PORTFOLIO = {
     ['🐄','Tracer','End-to-end cattle tracking across farm management, transport logistics, and marketplace trading.',['Vite','React Native','Go'],'fullstack','https://new.tracer.in.th/'],
     ['🎙️','Rama Hospital Voice Interview','Voice-driven patient questionnaire using Text-to-Speech, Speech-to-Text, and structured clinical data processing.',['Yii2','TTS','STT'],'web',''],
     ['📱','WU Thasala','Mobile application providing Walailak University staff access to internal services and information.',['React Native'],'mobile','https://wuthasala.vercel.app/']
+  ],
+
+  /* Featured projects — each one gets its own card on the orbit.
+     img = the project's own share image (og:image). Add more by copying an entry. */
+  featured: [
+    { title: 'pretty-avatar', url: 'https://kimookpong.github.io/pretty-avatar/', repo: 'https://github.com/kimookpong/pretty-avatar',
+      img: 'https://kimookpong.github.io/pretty-avatar/og.png', color: '#ff8fb8', tags: ['React', 'TypeScript', 'npm'],
+      kind: { en: 'React library', th: 'ไลบรารี React' },
+      en: 'A zero-dependency React component (~10 kB): little characters turn their heads to follow your cursor and react when you poke them. 68 ready-made avatars, plus an AI agent skill.',
+      th: 'คอมโพเนนต์ React ขนาด ~10 kB ไม่มี dependency ตัวการ์ตูนหันหัวตามเคอร์เซอร์และมีปฏิกิริยาเมื่อถูกจิ้ม มีให้เลือก 68 ตัว พร้อม AI agent skill' },
+    { title: 'Hey!', url: 'https://giganto-th.github.io/hey/', repo: 'https://github.com/giganto-th/hey',
+      img: 'https://giganto-th.github.io/hey/assets/poster.jpg', color: '#ffc24d', tags: ['Swift', 'macOS', 'Liquid Glass'],
+      kind: { en: 'macOS app', th: 'แอป macOS' },
+      en: 'A desktop pet for Mac that walks around your screen, nudges you to rest your eyes and runs Pomodoro focus sessions — with handy tools like clipboard history, Thai/English screen text capture, calendar reminders and AI credit tracking. Everything stays on your Mac.',
+      th: 'เพื่อนตัวน้อยบนเดสก์ท็อป Mac เดินเล่นบนหน้าจอ ชวนพักสายตา จับเวลาโฟกัสแบบ Pomodoro และมีเครื่องมือช่วยงาน ทั้งประวัติคลิปบอร์ด อ่านข้อความไทย/อังกฤษจากหน้าจอ เตือนนัดจากปฏิทิน และดูโควตา AI ทุกอย่างทำงานบนเครื่อง' },
+    { title: 'Element TD 3D', url: 'https://elementtd.thasala.dev/', repo: 'https://github.com/kimookpong/element-td',
+      img: 'https://elementtd.thasala.dev/og-image.jpg', color: '#58d0ff', tags: ['Three.js', 'WebGL', 'Vite', 'Cloudflare Workers'],
+      kind: { en: 'Browser game', th: 'เกมบนเว็บ' },
+      en: 'A free 3D elemental tower defense game for desktop and mobile browsers: summon six elements, build a maze, fuse 25 kinds of towers and take on elemental spirits and dragons.',
+      th: 'เกม Tower Defense สามมิติ เล่นฟรีบนเบราว์เซอร์ทั้งคอมและมือถือ เรียกพลัง 6 ธาตุ สร้างเขาวงกต หลอมรวมป้อม 25 แบบ ปราบภูตธาตุและมังกร' },
+    { title: 'NangLung', url: 'https://kimookpong.github.io/nanglung/', repo: 'https://github.com/kimookpong/nanglung',
+      img: 'https://kimookpong.github.io/nanglung/og-image.jpg', color: '#ff9a4d', tags: ['TypeScript', 'Hand tracking', 'Webcam'],
+      kind: { en: 'Digital shadow puppets', th: 'หนังตะลุงดิจิทัล' },
+      en: 'A digital Nang Talung (southern Thai shadow puppet) studio: perform the puppets with your hands through a webcam — five fingers per puppet, two hands at once. Free, nothing to install, and the camera image never leaves your device.',
+      th: 'สตูดิโอหนังตะลุงดิจิทัล เชิดตัวหนังด้วยมือผ่านเว็บแคม หนึ่งมือห้านิ้วต่อหนึ่งตัว เล่นสองมือพร้อมกันได้ ฟรี ไม่ต้องติดตั้ง และภาพกล้องไม่ถูกส่งออกจากเครื่อง' }
   ],
 
   /* [period, role, place, type, description] */

@@ -19,10 +19,21 @@ uniform vec4  uBg;     // background photo draw rect on screen (CSS px)
 uniform vec3  uTint;   // card colour
 uniform vec2  uLight;  // pointer position inside the card (0..1)
 uniform sampler2D uTex;
+uniform sampler2D uPer; // cut-out photo of the person (has alpha)
+uniform vec4  uPerR;   // person's on-screen rect (CSS px)
+uniform float uFront;  // 1 when the card is on the near side of the orbit, i.e. in front of the person
 
 vec3 bgAt(vec2 screen){
   vec2 t = (screen - uBg.xy) / uBg.zw;
-  return texture2D(uTex, clamp(t, .001, .999)).rgb;
+  vec3 c = texture2D(uTex, clamp(t, .001, .999)).rgb;
+  if (uFront > .5) {                 // a card in front of the person must show the person through the glass
+    vec2 tp = (screen - uPerR.xy) / uPerR.zw;
+    if (tp.x > 0. && tp.x < 1. && tp.y > 0. && tp.y < 1.) {
+      vec4 p = texture2D(uPer, tp);
+      c = mix(c, p.rgb, p.a);
+    }
+  }
+  return c;
 }
 void main(){
   vec2 uv = gl_FragCoord.xy / uSize; uv.y = 1. - uv.y;   // 0..1, y down
@@ -61,7 +72,17 @@ void main(){
 }`;
 
   const items = [];
-  let img = null, ready = false, ok = true;
+  let img = null, perImg = null, ready = false, ok = true;
+
+  function texture(gl, unit, source){
+    gl.activeTexture(gl.TEXTURE0 + unit);
+    gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
 
   function hex(c){ const n = parseInt(c.slice(1), 16); return [(n>>16&255)/255, (n>>8&255)/255, (n&255)/255]; }
 
@@ -76,14 +97,11 @@ void main(){
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
     const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    texture(gl, 0, img);
+    if (perImg) texture(gl, 1, perImg);
     const U = n => gl.getUniformLocation(pr, n);
-    item.gl = gl; item.u = { size:U('uSize'), box:U('uBox'), radius:U('uRadius'), rect:U('uRect'), bg:U('uBg'), tint:U('uTint'), light:U('uLight') };
+    item.gl = gl; item.u = { size:U('uSize'), box:U('uBox'), radius:U('uRadius'), rect:U('uRect'), bg:U('uBg'), tint:U('uTint'), light:U('uLight'), per:U('uPerR'), front:U('uFront') };
+    gl.uniform1i(U('uTex'), 0); gl.uniform1i(U('uPer'), 1);
     gl.uniform3fv(item.u.tint, hex(item.color));
   }
 
@@ -110,22 +128,22 @@ void main(){
       return true;
     },
     /* loads the background texture; resolves true when the glass can render */
-    init(src){
-      return new Promise(res => {
-        img = new Image(); img.src = src;
-        img.onload = () => {
-          ready = true;
-          try { items.forEach(setup); } catch (e) { ok = false; }
-          res(ok);
-        };
-        img.onerror = () => { ok = false; res(false); };
+    /* personSrc (optional): cut-out of the person, shown through cards that pass in front of them */
+    init(src, personSrc){
+      const load = s => new Promise(res => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = s; });
+      return Promise.all([load(src), personSrc ? load(personSrc) : null]).then(([b, p]) => {
+        if (!b) { ok = false; return false; }
+        img = b; perImg = p; ready = true;
+        try { items.forEach(setup); } catch (e) { ok = false; }
+        return ok;
       });
     },
     get active(){ return ready && ok; },
     /* draw every card; call once per animation frame after layout transforms are set */
-    render(bgEl){
+    render(bgEl, personEl){
       if (!ready || !ok) return;
       const B = bgRect(bgEl), dpr = Math.min(devicePixelRatio || 1, 1.5);
+      const P = perImg && personEl ? personEl.getBoundingClientRect() : null;
       for (const it of items) {
         if (!it.gl) continue;
         const c = it.canvas, w = Math.max(1, Math.round(c.clientWidth * dpr)), h = Math.max(1, Math.round(c.clientHeight * dpr));
@@ -141,6 +159,8 @@ void main(){
         gl.uniform4f(it.u.rect, r.left, r.top, r.width, r.height);
         gl.uniform4f(it.u.bg, B[0], B[1], B[2], B[3]);
         gl.uniform2f(it.u.light, it.light[0], it.light[1]);
+        gl.uniform1f(it.u.front, P && it.face.lgFront ? 1 : 0);
+        if (P) gl.uniform4f(it.u.per, P.left, P.top, P.width, P.height);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       }
     }
